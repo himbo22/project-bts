@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import cdio.desert_eagle.project_bts.adapter.ViewPagerAdapter;
+import cdio.desert_eagle.project_bts.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 vpMain;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // init data
+        MainViewModel mainViewModel = new MainViewModel();
+
         // init components
         tlMain = findViewById(R.id.tlMain);
         vpMain = findViewById(R.id.vpMain);
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         // attach tab layout
         new TabLayoutMediator(tlMain, vpMain, ((tab, pos) -> tab.setIcon(tabIcons[pos]))).attach();
+        mainViewModel.login("hoanglon","12345678");
 
     }
 
