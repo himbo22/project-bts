@@ -13,4 +13,7 @@
     <string name="cac">cac</string>
     <string name="_1_hour_ago">1 hour ago</string>
     <string name="hoang_cac_lon">hoang cac lon</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget password?</string>
 </resources>

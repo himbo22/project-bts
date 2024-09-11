@@ -20,7 +20,6 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signup);
         EditText emailSign = findViewById(R.id.email);
         EditText name = findViewById(R.id.username);

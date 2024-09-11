@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    ;
+
 
     private boolean isLoginValid(String username, String password) {
         return "user".equals(username) && "password".equals(password);
