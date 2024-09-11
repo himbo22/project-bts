@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="10dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
 
     <View
         android:layout_width="match_parent"
@@ -14,17 +13,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgAvatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/circle"
         android:contentDescription="@string/cac"
         android:src="@drawable/logo_bts"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circleImageView" />
 
     <ImageView
         android:id="@+id/imgOption"
@@ -62,12 +61,12 @@
 
     <TextView
         android:id="@+id/tvCaption"
-        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/hoang_cac_lon"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgAvatar" />
@@ -78,7 +77,7 @@
         android:layout_height="300dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/cac"
-        android:src="@tools:sample/avatars"
+        android:src="@drawable/bts_seeklogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCaption" />
@@ -90,7 +89,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/cac"
-        android:src="@drawable/home"
+        android:scaleType="fitXY"
+        android:src="@drawable/like"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgContent" />
 
@@ -112,7 +112,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/cac"
-        android:src="@drawable/home"
+        android:scaleType="fitXY"
+        android:src="@drawable/comment"
         app:layout_constraintStart_toEndOf="@+id/tvReaction"
         app:layout_constraintTop_toBottomOf="@id/imgContent" />
 

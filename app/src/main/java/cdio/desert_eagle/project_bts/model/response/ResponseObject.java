@@ -1,17 +1,11 @@
 package cdio.desert_eagle.project_bts.model.response;
 
-public class ResponseObject {
+public class ResponseObject<T> {
     String status;
     String message;
-    Object data;
+    T data;
 
     public ResponseObject() {
-    }
-
-    public ResponseObject(String status, String message, Object data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
     }
 
     public String getStatus() {
@@ -30,11 +24,11 @@ public class ResponseObject {
         this.message = message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }
