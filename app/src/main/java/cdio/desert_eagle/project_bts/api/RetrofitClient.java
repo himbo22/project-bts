@@ -1,5 +1,7 @@
 package cdio.desert_eagle.project_bts.api;
 
+import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -20,7 +22,7 @@ public class RetrofitClient {
                 .retryOnConnectionFailure(true)
                 .addInterceptor(loggingInterceptor);
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://e73b-2402-800-6273-e3bc-bc37-bb3c-a748-7630.ngrok-free.app")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpBuilder.build())
                 .build();
