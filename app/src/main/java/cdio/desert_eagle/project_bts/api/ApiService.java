@@ -65,4 +65,12 @@ public interface ApiService {
 
     @PUT("/api/comments/add")
     Call<ResponseObject<Comment>> addComment(@Body CommentRequest commentRequest);
+
+    // user
+    @GET("/api/users/search/{username}")
+    Call<ResponseObject<PageResponse<User>>> searchUsersByUsername(
+            @Path("username") String username,
+            @Query(value = "page") int page,
+            @Query(value = "size") int size
+    );
 }

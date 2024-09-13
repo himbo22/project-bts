@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llUser"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp">
 
     <!-- Icon người dùng -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/userIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="User Icon"
-        android:src="@drawable/user" />
+        android:src="@drawable/user"
+        app:shapeAppearanceOverlay="@style/circleImageView" />
 
     <!-- Tên người dùng -->
     <TextView
