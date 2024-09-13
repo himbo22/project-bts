@@ -32,14 +32,14 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         apiService.getAllUserPosts(id, page, size).enqueue(new Callback<ResponseObject<PageResponse<UserPosts>>>() {
             @Override
             public void onResponse(Call<ResponseObject<PageResponse<UserPosts>>> call, Response<ResponseObject<PageResponse<UserPosts>>> response) {
-                assert response.body() != null;
-                listener.onSuccess(response.body().getData());
+                if (response.body() != null) {
+                    listener.onSuccess(response.body().getData());
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseObject<PageResponse<UserPosts>>> call, Throwable t) {
                 listener.onFailure(t);
-
             }
         });
     }
