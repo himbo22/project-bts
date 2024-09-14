@@ -1,19 +1,23 @@
 package cdio.desert_eagle.project_bts.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cdio.desert_eagle.project_bts.R;
+import cdio.desert_eagle.project_bts.UserActivity;
 import cdio.desert_eagle.project_bts.adapter.UserAdapter;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.repository.BaseResult;
@@ -23,8 +27,19 @@ public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerViewUsers;
     private UserAdapter userAdapter;
-    private List<User> userList;
     private SearchViewModel searchViewModel;
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+                    if (o.getResultCode() == 1) {
+                        Toast.makeText(requireActivity(), o.getData().getStringExtra("hi"), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,17 +49,18 @@ public class SearchFragment extends Fragment {
 
         // init data
         searchViewModel = new SearchViewModel();
-        userList = new ArrayList<>();
 
         // Thiết lập RecyclerView
         recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Thiết lập adapter cho RecyclerView
-        userAdapter = new UserAdapter(userList, new BaseResult<User>() {
+        userAdapter = new UserAdapter(new BaseResult<User>() {
             @Override
             public void onSuccess(User response) {
-
+                Intent intent = new Intent(requireActivity(), UserActivity.class);
+                intent.putExtra("userId", response.getId());
+                activityResultLauncher.launch(intent);
             }
 
             @Override
@@ -65,7 +81,6 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchViewModel.searchUsersByUsername(newText);
                 return true;
             }
         });

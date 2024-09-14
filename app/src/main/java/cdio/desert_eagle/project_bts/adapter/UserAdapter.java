@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cdio.desert_eagle.project_bts.R;
@@ -25,8 +26,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private List<User> userList;
     private final BaseResult<User> listener;
 
-    public UserAdapter(List<User> userList, BaseResult<User> listener) {
-        this.userList = userList;
+    public UserAdapter(BaseResult<User> listener) {
+        this.userList = new ArrayList<>();
         this.listener = listener;
     }
 
