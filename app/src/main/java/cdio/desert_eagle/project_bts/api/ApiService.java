@@ -7,19 +7,38 @@ import cdio.desert_eagle.project_bts.model.response.CommentResponse;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
+import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
+
+    // auth
     @POST("/api/users/login")
-    Call<ResponseObject> login(@Body LoginRequest loginRequest);
+    Call<ResponseObject<User>> login(@Body LoginRequest loginRequest);
+
+    @Multipart
+    @Headers("multipart:true")
+    @POST("/api/users/create")
+    Call<ResponseObject<User>> register(
+            @Part("username") RequestBody user,
+            @Part("password") RequestBody password,
+            @Part("email") RequestBody email,
+            @Part("bio") RequestBody bio,
+            @Part MultipartBody.Part image
+    );
 
     // post
     @GET("/api/posts/user/{id}")

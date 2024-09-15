@@ -8,18 +8,27 @@ public class SharedPref {
     final SharedPreferences sharedPref;
     final SharedPreferences.Editor editor;
 
-    SharedPref(Context context) {
+    public SharedPref(Context context) {
         this.context = context;
         sharedPref = context.getSharedPreferences("bts", 0);
         editor = sharedPref.edit();
     }
 
-    public String getData(String key) {
+    public String getStringData(String key) {
         return sharedPref.getString(key, null);
     }
 
-    public void setData(String key, String value) {
+    public Long getLongData(String key) {
+        return sharedPref.getLong(key, 0L);
+    }
+
+    public void setStringData(String key, String value) {
         editor.putString(key, value);
+        editor.apply();
+    }
+
+    public void setLongData(String key, Long value) {
+        editor.putLong(key, value);
         editor.apply();
     }
 }

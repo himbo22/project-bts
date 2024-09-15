@@ -1,21 +1,36 @@
 package cdio.desert_eagle.project_bts.model.response;
 
+import androidx.annotation.NonNull;
+
 public class User {
     public Long id;
     public String username;
     public String password;
     public String email;
     public String avatar;
+    public String bio;
 
-    public User() {
+    public String getBio() {
+        return bio;
     }
 
-    public User(Long id, String username, String password, String email, String avatar) {
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public User(Long id, String username, String password, String email, String avatar, String bio) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.avatar = avatar;
+        this.bio = bio;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getId() + " / " + getAvatar() + " / " + getEmail() + " / " + getPassword() + " / " + getUsername();
     }
 
     public Long getId() {

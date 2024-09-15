@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import cdio.desert_eagle.project_bts.viewmodel.LoginViewModel;
+
 public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,35 +21,35 @@ public class LoginActivity extends AppCompatActivity {
         Button login = findViewById(R.id.button);
         TextView forgot = findViewById(R.id.forgotPasswordTextView);
         TextView sign = findViewById(R.id.sign_up);
+        LoginViewModel loginViewModel = new LoginViewModel(this.getApplication());
 
         //  Login
         login.setOnClickListener(v -> {
             String username = User.getText().toString().trim();
             String password = Pass.getText().toString().trim();
-            if (isLoginValid(username, password)) {
-                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-
-                Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            if (username.isBlank() && password.isBlank()) {
+                return;
             }
+            loginViewModel.login(username, password);
         });
 
         //   Sign Up
-        sign.setOnClickListener(v ->
-
-        {
+        sign.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
             startActivity(intent);
         });
+
+        // observe data
+        loginViewModel.loginLiveData.observe(this, data -> {
+            loginViewModel.saveUserInformation(data.getId());
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        });
+
+        loginViewModel.errorLiveData.observe(this, data -> {
+            Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+        });
     }
 
-
-
-    private boolean isLoginValid(String username, String password) {
-        return "user".equals(username) && "password".equals(password);
-    }
 }
 
