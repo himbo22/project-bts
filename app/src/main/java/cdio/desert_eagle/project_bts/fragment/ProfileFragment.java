@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment {
     private void doEverything() {
         profileViewModel.getAllUserPosts(profileViewModel.userId, 0, 20);
         profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> {
-            profileAdapter.updateData(userPostsLiveData);
+            profileAdapter.resetData(userPostsLiveData);
         });
     }
 
