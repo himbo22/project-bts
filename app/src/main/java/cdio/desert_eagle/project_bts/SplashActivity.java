@@ -7,17 +7,29 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
+import cdio.desert_eagle.project_bts.viewmodel.SplashScreenViewModel;
+
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        SplashScreenViewModel splashScreenViewModel = new SplashScreenViewModel(this.getApplication());
+
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent;
+            if (Objects.equals(splashScreenViewModel.getLoggedInformation(), "yes")) {
+                intent = new Intent(SplashActivity.this, MainActivity.class);
+            } else {
+                intent = new Intent(SplashActivity.this, LoginActivity.class);
+            }
             startActivity(intent);
             finish();
-        }, 3000);
+        }, 1700);
     }
 }

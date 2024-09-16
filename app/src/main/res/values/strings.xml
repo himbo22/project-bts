@@ -13,4 +13,13 @@
     <string name="cac">cac</string>
     <string name="_1_hour_ago">1 hour ago</string>
     <string name="hoang_cac_lon">hoang cac lon</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="login">Login</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="log_out">Log out</string>
+    <string name="have_an_account_login">Have an account? Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
 </resources>

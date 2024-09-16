@@ -40,8 +40,6 @@ public class CommentRepositoryImpl implements CommentRepository {
         apiService.addComment(commentRequest).enqueue(new Callback<ResponseObject<Comment>>() {
             @Override
             public void onResponse(Call<ResponseObject<Comment>> call, Response<ResponseObject<Comment>> response) {
-                assert response.body() != null;
-                System.out.println(response.body().getData().getContent());
                 listener.onSuccess(response.body());
             }
 

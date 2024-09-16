@@ -17,6 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@string/hoang" />
+
             <ImageView
                 android:id="@+id/imgAvatar"
                 android:layout_width="150dp"
@@ -24,9 +31,10 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/circle"
                 android:src="@drawable/logo_bts"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/toolBar" />
 
             <TextView
                 android:id="@+id/tvUsername"

@@ -1,10 +1,13 @@
 package cdio.desert_eagle.project_bts.viewmodel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import cdio.desert_eagle.project_bts.data.SharedPref;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
@@ -15,22 +18,33 @@ import cdio.desert_eagle.project_bts.repository.profile.ProfileRepositoryImpl;
 import cdio.desert_eagle.project_bts.repository.reaction.ReactionRepository;
 import cdio.desert_eagle.project_bts.repository.reaction.ReactionRepositoryImpl;
 
-public class ProfileViewModel extends ViewModel {
+public class ProfileViewModel extends Application {
     private final ProfileRepository profileRepository;
     private final ReactionRepository reactionRepository;
+    private final SharedPref sharedPref;
     public MutableLiveData<List<UserPosts>> allPosts;
     public Integer pages = 0;
     public MutableLiveData<Boolean> existedReaction;
+    public Long userId;
+
 
     public void resetAll() {
 
     }
 
-    public ProfileViewModel() {
+
+    public ProfileViewModel(@NonNull Application application) {
         this.profileRepository = new ProfileRepositoryImpl();
         this.reactionRepository = new ReactionRepositoryImpl();
+        this.sharedPref = new SharedPref(application);
         existedReaction = new MutableLiveData<>();
         allPosts = new MutableLiveData<>();
+        userId = sharedPref.getLongData("userId");
+    }
+
+
+    public void logOut() {
+        sharedPref.setStringData("loggedIn", "no");
     }
 
     public void addReaction(Long user_id, Long post_id) {
