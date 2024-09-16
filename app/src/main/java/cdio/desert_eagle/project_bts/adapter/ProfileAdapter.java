@@ -142,5 +142,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
         notifyDataSetChanged();
     }
 
+    public void resetData(List<UserPosts> newUserPosts) {
+        userPosts.clear();
+        userPosts.addAll(newUserPosts);
+        notifyDataSetChanged();
+    }
+
+    public void updateItem(int pos, UserPosts userPosts) {
+        this.userPosts.set(pos, userPosts);
+        notifyDataSetChanged();
+    }
+
 }
 
