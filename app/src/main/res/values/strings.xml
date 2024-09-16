@@ -58,4 +58,6 @@
     <string name="status_like_count">status_like_count</string>
     <string name="comment_count">comment_count</string>
     <string name="status_comment_count">status_comment_count</string>
+    <string name="confirm">Confirm</string>
+    <string name="discard">Discard</string>
 </resources>
