@@ -1,6 +1,9 @@
 package cdio.desert_eagle.project_bts.fragment;
 
+import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,53 +12,56 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.bumptech.glide.Glide;
 
+import cdio.desert_eagle.project_bts.EditProfileActivity;
 import cdio.desert_eagle.project_bts.LoginActivity;
 import cdio.desert_eagle.project_bts.MainActivity;
 import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.adapter.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
-import cdio.desert_eagle.project_bts.model.response.UserPosts;
+import cdio.desert_eagle.project_bts.databinding.FragmentProfileBinding;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 
 
 public class ProfileFragment extends Fragment {
 
     ProfileViewModel profileViewModel;
-    List<UserPosts> userPosts = new ArrayList<>();
-    RecyclerView rvPosts;
     ProfileAdapter profileAdapter;
-    SwipeRefreshLayout srProfile;
-    NestedScrollView nsProfile;
-    Toolbar toolbar;
     private boolean loading = true;
     int pastVisibleItems, visibleItemCount, totalItemCount;
+    FragmentProfileBinding binding;
+
+    private final ActivityResultLauncher<Intent> editProfileResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+
+                }
+            }
+    );
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        rvPosts = view.findViewById(R.id.rvPosts);
-        rvPosts.setNestedScrollingEnabled(false);
-        srProfile = view.findViewById(R.id.srProfile);
-        nsProfile = view.findViewById(R.id.nsProfile);
-        toolbar = view.findViewById(R.id.toolBar);
-        return view;
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -64,7 +70,7 @@ public class ProfileFragment extends Fragment {
         profileViewModel = new ProfileViewModel(requireActivity().getApplication());
         MenuHost menuHost = requireActivity();
 
-        ((MainActivity) requireActivity()).setSupportActionBar(toolbar);
+        ((MainActivity) requireActivity()).setSupportActionBar(binding.toolBar);
 
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -75,7 +81,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.editProfile) {
-
+                    binding.imgAvatar.setDrawingCacheEnabled(true);
+                    Intent intent = new Intent(requireActivity(), EditProfileActivity.class);
+                    Bitmap b = binding.imgAvatar.getDrawingCache();
+                    intent.putExtra("avatar", b);
+                    intent.putExtra("username", binding.tvUsername.getText());
+                    intent.putExtra("bio", binding.tvBio.getText());
+                    editProfileResultLauncher.launch(intent);
                     return true;
                 } else if (menuItem.getItemId() == R.id.logOut) {
                     profileViewModel.logOut();
@@ -88,7 +100,7 @@ public class ProfileFragment extends Fragment {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-        profileAdapter = new ProfileAdapter(userPosts, getContext(), profileViewModel, new OnProfileItemListener() {
+        profileAdapter = new ProfileAdapter(getContext(), profileViewModel, new OnProfileItemListener() {
             @Override
             public void option() {
 
@@ -100,30 +112,42 @@ public class ProfileFragment extends Fragment {
                 commentBottomSheetFragment.show(getParentFragmentManager(), commentBottomSheetFragment.getTag());
             }
         });
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvPosts.setAdapter(profileAdapter);
+        binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvPosts.setAdapter(profileAdapter);
         profileViewModel.getAllUserPosts(profileViewModel.userId, profileViewModel.pages, 20);
+        profileViewModel.getUserInformation();
 
+        // observer
         profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> {
             profileAdapter.updateData(userPostsLiveData);
             loading = true;
         });
 
-        srProfile.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        profileViewModel.userResponseMutableLiveData.observe(requireActivity(), data -> {
+            Glide.with(binding.imgAvatar.getContext()).
+                    load(BASE_URL + "/api/images/" + data.getAvatar()).into(binding.imgAvatar);
+            binding.tvUsername.setText(data.getUsername());
+            binding.tvBio.setText(data.getBio() == null ? data.getBio() : "");
+            binding.tvPostCount.setText(String.valueOf(data.getPost()));
+            binding.tvFollowerCount.setText(String.valueOf(data.getFollowers()));
+            binding.tvFollowingCount.setText(String.valueOf(data.getFollowing()));
+        });
+
+        binding.srProfile.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 doEverything();
-                srProfile.setRefreshing(false);
+                binding.srProfile.setRefreshing(false);
             }
         });
 
 
-        rvPosts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.rvPosts.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    RecyclerView.LayoutManager lm = rvPosts.getLayoutManager();
+                    RecyclerView.LayoutManager lm = binding.rvPosts.getLayoutManager();
                     assert lm != null;
                     visibleItemCount = lm.getChildCount();
                     totalItemCount = lm.getItemCount();
@@ -143,11 +167,11 @@ public class ProfileFragment extends Fragment {
 
 
     private void doEverything() {
+        profileViewModel.getUserInformation();
         profileViewModel.getAllUserPosts(profileViewModel.userId, 0, 20);
         profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> {
             profileAdapter.resetData(userPostsLiveData);
         });
     }
-
 
 }

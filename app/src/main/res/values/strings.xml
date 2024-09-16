@@ -22,4 +22,6 @@
     <string name="have_an_account_login">Have an account? Login</string>
     <string name="sign_up">Sign up</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="confirm">Confirm</string>
+    <string name="discard">Discard</string>
 </resources>

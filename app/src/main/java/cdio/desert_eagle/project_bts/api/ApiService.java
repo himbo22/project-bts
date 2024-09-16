@@ -9,6 +9,7 @@ import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
+import cdio.desert_eagle.project_bts.model.response.UserResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -73,4 +74,7 @@ public interface ApiService {
             @Query(value = "page") int page,
             @Query(value = "size") int size
     );
+
+    @GET("/api/users/{userId}")
+    Call<ResponseObject<UserResponse>> getUserById(@Path("userId") Long userId);
 }

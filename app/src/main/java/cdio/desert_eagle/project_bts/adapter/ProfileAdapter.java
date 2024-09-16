@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 import cdio.desert_eagle.project_bts.R;
@@ -30,8 +31,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
     ProfileViewModel profileViewModel;
     OnProfileItemListener listener;
 
-    public ProfileAdapter(List<UserPosts> userPosts, Context context, ProfileViewModel profileViewModel, OnProfileItemListener listener) {
-        this.userPosts = userPosts;
+    public ProfileAdapter(Context context, ProfileViewModel profileViewModel, OnProfileItemListener listener) {
+        this.userPosts = new ArrayList<>();
         this.context = context;
         this.profileViewModel = profileViewModel;
         this.listener = listener;

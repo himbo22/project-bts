@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -25,7 +24,6 @@ import cdio.desert_eagle.project_bts.viewmodel.SearchViewModel;
 
 public class SearchFragment extends Fragment {
 
-    private RecyclerView recyclerViewUsers;
     private UserAdapter userAdapter;
     private SearchViewModel searchViewModel;
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -33,9 +31,6 @@ public class SearchFragment extends Fragment {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult o) {
-                    if (o.getResultCode() == 1) {
-                        Toast.makeText(requireActivity(), o.getData().getStringExtra("hi"), Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
     );
@@ -51,7 +46,7 @@ public class SearchFragment extends Fragment {
         searchViewModel = new SearchViewModel();
 
         // Thiết lập RecyclerView
-        recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
+        RecyclerView recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Thiết lập adapter cho RecyclerView

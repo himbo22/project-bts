@@ -36,21 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
         // disable swipe
         vpMain.setUserInputEnabled(false);
+        vpMain.setOffscreenPageLimit(4);
 
         // attach tab layout
         new TabLayoutMediator(tlMain, vpMain, ((tab, pos) -> tab.setIcon(tabIcons[pos]))).attach();
-
-//        addMenuProvider(new MenuProvider() {
-//            @Override
-//            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-//                menuInflater.inflate(R.menu.profile_menu, menu);
-//            }
-//
-//            @Override
-//            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-//                return false;
-//            }
-//        });
     }
 
 }
