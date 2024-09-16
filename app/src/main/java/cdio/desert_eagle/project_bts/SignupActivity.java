@@ -21,8 +21,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.imageview.ShapeableImageView;
-
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -109,6 +107,8 @@ public class SignupActivity extends AppCompatActivity {
         // observer
         registerViewModel.registerLiveData.observe(this, data -> {
             Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+            finishAffinity();
         });
         registerViewModel.errorLiveData.observe(this, message -> {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

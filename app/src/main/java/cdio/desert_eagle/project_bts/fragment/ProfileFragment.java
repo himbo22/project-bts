@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
                 } else if (menuItem.getItemId() == R.id.logOut) {
                     profileViewModel.logOut();
                     startActivity(new Intent(requireActivity(), LoginActivity.class));
-                    requireActivity().finish();
+                    requireActivity().finishAffinity();
                     return true;
                 }
 
