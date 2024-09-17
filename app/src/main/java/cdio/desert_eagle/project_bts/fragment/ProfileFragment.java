@@ -2,6 +2,7 @@ package cdio.desert_eagle.project_bts.fragment;
 
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -48,10 +49,9 @@ public class ProfileFragment extends Fragment {
 
     private final ActivityResultLauncher<Intent> editProfileResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult o) {
-
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    doEverything();
                 }
             }
     );
@@ -127,18 +127,15 @@ public class ProfileFragment extends Fragment {
             Glide.with(binding.imgAvatar.getContext()).
                     load(BASE_URL + "/api/images/" + data.getAvatar()).into(binding.imgAvatar);
             binding.tvUsername.setText(data.getUsername());
-            binding.tvBio.setText(data.getBio() == null ? data.getBio() : "");
+            binding.tvBio.setText(data.getBio() != null ? data.getBio() : "");
             binding.tvPostCount.setText(String.valueOf(data.getPost()));
             binding.tvFollowerCount.setText(String.valueOf(data.getFollowers()));
             binding.tvFollowingCount.setText(String.valueOf(data.getFollowing()));
         });
 
-        binding.srProfile.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                doEverything();
-                binding.srProfile.setRefreshing(false);
-            }
+        binding.srProfile.setOnRefreshListener(() -> {
+            doEverything();
+            binding.srProfile.setRefreshing(false);
         });
 
 
@@ -169,9 +166,7 @@ public class ProfileFragment extends Fragment {
     private void doEverything() {
         profileViewModel.getUserInformation();
         profileViewModel.getAllUserPosts(profileViewModel.userId, 0, 20);
-        profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> {
-            profileAdapter.resetData(userPostsLiveData);
-        });
+        profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> profileAdapter.resetData(userPostsLiveData));
     }
 
 }

@@ -9,8 +9,11 @@ import cdio.desert_eagle.project_bts.api.ApiService;
 import cdio.desert_eagle.project_bts.api.RetrofitClient;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
+import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
 import cdio.desert_eagle.project_bts.model.response.UserResponse;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,4 +69,32 @@ public class ProfileRepositoryImpl implements ProfileRepository {
             }
         });
     }
+
+    @Override
+    public void updateProfile(RequestBody userId, RequestBody username, RequestBody bio, MultipartBody.Part image, ProfileResultListener<ResponseObject<User>> listener) {
+        apiService.updateProfile(userId, username, bio, image).enqueue(new Callback<ResponseObject<User>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
+                if (response.code() != 200) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseObject mError;
+                    try {
+                        mError = gson.fromJson(response.errorBody().string(), ResponseObject.class);
+                        listener.onSuccess(mError);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    listener.onSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
+    }
+
+
 }

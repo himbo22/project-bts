@@ -1,5 +1,7 @@
 package cdio.desert_eagle.project_bts.api;
 
+import androidx.annotation.Nullable;
+
 import cdio.desert_eagle.project_bts.model.request.CommentRequest;
 import cdio.desert_eagle.project_bts.model.request.LoginRequest;
 import cdio.desert_eagle.project_bts.model.response.Comment;
@@ -77,4 +79,14 @@ public interface ApiService {
 
     @GET("/api/users/{userId}")
     Call<ResponseObject<UserResponse>> getUserById(@Path("userId") Long userId);
+
+    @Multipart
+    @Headers("multipart:true")
+    @PUT("api/users/update")
+    Call<ResponseObject<User>> updateProfile(
+            @Part("userId") RequestBody userId,
+            @Part("username") RequestBody username,
+            @Nullable @Part("bio") RequestBody bio,
+            @Nullable @Part MultipartBody.Part image
+    );
 }
