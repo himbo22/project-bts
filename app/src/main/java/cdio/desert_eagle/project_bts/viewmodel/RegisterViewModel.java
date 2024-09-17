@@ -10,11 +10,11 @@ import androidx.lifecycle.MutableLiveData;
 import java.io.File;
 
 import cdio.desert_eagle.project_bts.data.SharedPref;
-import cdio.desert_eagle.project_bts.extension.StringEx;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.repository.auth.AuthRepository;
 import cdio.desert_eagle.project_bts.repository.auth.AuthRepositoryImpl;
+import cdio.desert_eagle.project_bts.utils.RealPathUtil;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -37,10 +37,10 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public void register(String username, String password, String email, String bio, Uri image) {
-        String imageRealPath = StringEx.getRealPathFromUri(image, application.getApplicationContext());
+        String imageRealPath = RealPathUtil.getRealPath(application, image);
         File imageFile;
         if (imageRealPath != null) {
-            imageFile = new File(StringEx.getRealPathFromUri(image, application.getApplicationContext()));
+            imageFile = new File(imageRealPath);
         } else {
             errorLiveData.postValue("Something goes wrong");
             return;

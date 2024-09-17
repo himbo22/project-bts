@@ -12,6 +12,7 @@ import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
+import cdio.desert_eagle.project_bts.model.response.UserResponse;
 import cdio.desert_eagle.project_bts.repository.BaseResult;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepository;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepositoryImpl;
@@ -23,14 +24,11 @@ public class ProfileViewModel extends Application {
     private final ReactionRepository reactionRepository;
     private final SharedPref sharedPref;
     public MutableLiveData<List<UserPosts>> allPosts;
-    public Integer pages = 0;
     public MutableLiveData<Boolean> existedReaction;
+    public MutableLiveData<UserResponse> userResponseMutableLiveData;
+    public MutableLiveData<String> errorLiveData;
+    public Integer pages = 0;
     public Long userId;
-
-
-    public void resetAll() {
-
-    }
 
 
     public ProfileViewModel(@NonNull Application application) {
@@ -39,12 +37,32 @@ public class ProfileViewModel extends Application {
         this.sharedPref = new SharedPref(application);
         existedReaction = new MutableLiveData<>();
         allPosts = new MutableLiveData<>();
+        userResponseMutableLiveData = new MutableLiveData<>();
+        errorLiveData = new MutableLiveData<>();
         userId = sharedPref.getLongData("userId");
     }
 
 
     public void logOut() {
         sharedPref.setStringData("loggedIn", "no");
+    }
+
+    public void getUserInformation() {
+        profileRepository.getUserById(userId, new ProfileRepository.ProfileResultListener<ResponseObject<UserResponse>>() {
+            @Override
+            public void onSuccess(ResponseObject<UserResponse> response) {
+                if (response.getData() != null) {
+                    userResponseMutableLiveData.postValue(response.getData());
+                } else {
+                    errorLiveData.postValue(response.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 
     public void addReaction(Long user_id, Long post_id) {
@@ -90,7 +108,7 @@ public class ProfileViewModel extends Application {
     }
 
     public void getAllUserPosts(Long id, int page, int size) {
-        profileRepository.getAllUserPosts(id, page, size, new ProfileRepository.ProfileResultListener() {
+        profileRepository.getAllUserPosts(id, page, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
             @Override
             public void onSuccess(PageResponse<UserPosts> response) {
                 allPosts.postValue(response.content);
@@ -105,7 +123,7 @@ public class ProfileViewModel extends Application {
 
     public void loadMoreUserPosts(Long id, int size) {
         pages++;
-        profileRepository.getAllUserPosts(id, pages, size, new ProfileRepository.ProfileResultListener() {
+        profileRepository.getAllUserPosts(id, pages, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
             @Override
             public void onSuccess(PageResponse<UserPosts> response) {
                 if (response.getContent() == null) {
