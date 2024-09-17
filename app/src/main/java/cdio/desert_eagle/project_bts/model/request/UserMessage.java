@@ -4,8 +4,6 @@ public class UserMessage {
     Long userId;
     String username;
     String avatar;
-    String sentAt;
-    String message;
 
     public String getUsername() {
         return username;
@@ -23,21 +21,6 @@ public class UserMessage {
         this.avatar = avatar;
     }
 
-    public String getSentAt() {
-        return sentAt;
-    }
-
-    public void setSentAt(String sentAt) {
-        this.sentAt = sentAt;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public Long getUserId() {
         return userId;
@@ -47,11 +30,9 @@ public class UserMessage {
         this.userId = userId;
     }
 
-    public UserMessage(Long userId, String username, String avatar, String sentAt, String message) {
+    public UserMessage(Long userId, String username, String avatar) {
         this.userId = userId;
         this.username = username;
         this.avatar = avatar;
-        this.sentAt = sentAt;
-        this.message = message;
     }
 }

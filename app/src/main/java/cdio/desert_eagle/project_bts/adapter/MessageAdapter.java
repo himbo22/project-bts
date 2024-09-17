@@ -64,15 +64,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
         UserMessage userMessage = chatMessages.get(position);
         if (holder.getItemViewType() == SENDING) {
             SendMessageBinding binding = ((SendingViewHolder) holder).sendingBinding;
-            binding.tvMessage.setText(userMessage.getMessage());
-            binding.tvSentAt.setText(userMessage.getSentAt());
+//            binding.tvMessage.setText(userMessage.getMessage());
+//            binding.tvSentAt.setText(userMessage.getSentAt());
             Glide.with(binding.imgAvatar.getContext())
                     .load(BASE_URL + "/api/images/" + userMessage.getAvatar())
                     .into(binding.imgAvatar);
         } else {
             ReceiveMessageBinding binding = ((ReceivingViewHolder) holder).receivingBinding;
-            binding.tvMessage.setText(userMessage.getMessage());
-            binding.tvSentAt.setText(userMessage.getSentAt());
+//            binding.tvMessage.setText(userMessage.getMessage());
+//            binding.tvSentAt.setText(userMessage.getSentAt());
             Glide.with(binding.imgAvatar.getContext())
                     .load(BASE_URL + "/api/images/" + userMessage.getAvatar())
                     .into(binding.imgAvatar);

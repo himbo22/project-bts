@@ -13,6 +13,16 @@ public class UserPosts {
     private Long liked;
     private Long commented;
 
+    private transient boolean likedByUser;
+
+    public boolean isLikedByUser() {
+        return likedByUser;
+    }
+
+    public void setLikedByUser(boolean likedByUser) {
+        this.likedByUser = likedByUser;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -27,8 +37,6 @@ public class UserPosts {
                 getCommented();
     }
 
-    public UserPosts() {
-    }
 
     public UserPosts(Long id, String caption, String content, String createdAt, Long author, String authorAvatar, String authorName, Long liked, Long commented) {
         this.id = id;

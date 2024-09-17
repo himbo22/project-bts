@@ -13,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -25,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -100,9 +97,19 @@ public class ProfileFragment extends Fragment {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-        profileAdapter = new ProfileAdapter(getContext(), profileViewModel, new OnProfileItemListener() {
+        profileAdapter = new ProfileAdapter(getContext(), new OnProfileItemListener() {
             @Override
             public void option() {
+
+            }
+
+            @Override
+            public void like(long userId, long postId, int position) {
+
+            }
+
+            @Override
+            public void liked(long userId, long postId, int position) {
 
             }
 

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import cdio.desert_eagle.project_bts.databinding.FragmentMessageBinding;
+import cdio.desert_eagle.project_bts.model.request.Message;
 import cdio.desert_eagle.project_bts.model.request.UserMessage;
 import cdio.desert_eagle.project_bts.viewmodel.UserListViewModel;
 
@@ -29,12 +30,12 @@ public class MessageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userListViewModel = new UserListViewModel();
+        userListViewModel = new UserListViewModel(requireActivity().getApplication());
 
         binding.btn.setOnClickListener(v -> {
             userListViewModel.sendMessage(
-                    new UserMessage(2L, "cac", "zxc", "zxc", "hoang lon"),
-                    7L
+                    new UserMessage(13L, "tintuc_24h", "e3cc0fe8f6584ab684139b384721e9ad.jpg"),
+                    new Message("", "hoang lon")
             );
         });
 
