@@ -28,9 +28,10 @@ public class LoginViewModel extends AndroidViewModel {
         errorLiveData = new MutableLiveData<>();
     }
 
-    public void saveUserInformation(Long userId) {
+    public void saveUserInformation(Long userId, String avatar) {
         sharedPref.setStringData("loggedIn", "yes");
         sharedPref.setLongData("userId", userId);
+        sharedPref.setStringData("avatar", avatar);
     }
 
 

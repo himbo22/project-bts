@@ -4,6 +4,25 @@ public class UserMessage {
     Long userId;
     String username;
     String avatar;
+    String lastMessage;
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public UserMessage() {
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public UserMessage(Long userId, String username, String avatar, String lastMessage) {
+        this.userId = userId;
+        this.username = username;
+        this.avatar = avatar;
+        this.lastMessage = lastMessage;
+    }
 
     public String getUsername() {
         return username;

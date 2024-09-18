@@ -10,8 +10,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import cdio.desert_eagle.project_bts.model.request.MESSAGE_TYPE;
 import cdio.desert_eagle.project_bts.model.request.Message;
 import cdio.desert_eagle.project_bts.model.request.UserMessage;
+import cdio.desert_eagle.project_bts.model.response.MessageResponse;
 
 public class MessageRepositoryImpl implements MessageRepository {
     private final DatabaseReference reference;
@@ -31,8 +37,8 @@ public class MessageRepositoryImpl implements MessageRepository {
         String messageId = (userId < userMessage.getUserId()) ? userId + ":" + userMessage.getUserId() : userMessage.getUserId() + ":" + userId;
         dbMessageReference.child(messageId)
                 .child(message.getSentAt())
-                .child(String.valueOf(userId))
-                .setValue(message.getMessage())
+                .child("message")
+                .setValue(new MessageResponse(message.getUserId(), message.getMessage()))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -42,20 +48,55 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public void getMessage(MessageResultListener<String> listener) {
-    }
-
-    @Override
-    public void getUsersGotMessage(Long userId, MessageResultListener<Void> listener) {
-        reference.child("users").child(String.valueOf(userId)).addValueEventListener(new ValueEventListener() {
+    public void getMessage(Long userId, String messageId, MessageResultListener<List<Message>> listener) {
+        reference.child("messages").child(messageId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    final List<Message> messages = new ArrayList<>();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        MessageResponse messageResponse = dataSnapshot.child("message").getValue(MessageResponse.class);
+
+                        Message message = new Message(
+                                messageResponse.getKey(),
+                                dataSnapshot.getKey(),
+                                messageResponse.getValue(),
+                                (Objects.equals(userId, messageResponse.getKey())) ?
+                                        MESSAGE_TYPE.SENDING : MESSAGE_TYPE.RECEIVING);
+                        messages.add(message);
+                    }
+                    listener.onSuccess(messages);
+                }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+
+    @Override
+    public void getUsersMessaged(Long userId, MessageResultListener<List<UserMessage>> listener) {
+        reference.child("users").child(String.valueOf(userId)).orderByChild("lastMessage").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    final List<UserMessage> userMessages = new ArrayList<>();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        final UserMessage userMessage = data.getValue(UserMessage.class);
+                        userMessages.add(userMessage);
+                    }
+                    listener.onSuccess(userMessages);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onFailure(error.toException());
             }
         });
     }

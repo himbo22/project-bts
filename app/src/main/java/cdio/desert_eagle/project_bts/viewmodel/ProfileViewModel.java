@@ -128,7 +128,6 @@ public class ProfileViewModel extends Application {
         profileRepository.getAllUserPosts(userId, pages, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
             @Override
             public void onSuccess(PageResponse<UserPosts> response) {
-                Log.d("hoangdeptrai", "onSuccess: " + response.getContent());
                 if (response.getContent().isEmpty()) {
                     pages--;
                 } else {

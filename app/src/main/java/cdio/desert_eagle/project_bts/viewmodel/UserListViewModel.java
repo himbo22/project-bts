@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import cdio.desert_eagle.project_bts.data.SharedPref;
@@ -21,41 +22,26 @@ import cdio.desert_eagle.project_bts.repository.message.MessageRepositoryImpl;
 public class UserListViewModel extends AndroidViewModel {
 
     private final MessageRepository messageRepository;
-    private final SharedPref sharedPref;
     public MutableLiveData<String> realTimeMessageLiveData;
-    private Long userId;
+    public MutableLiveData<List<UserMessage>> userMessagesListLiveData;
+    private final Long userId;
+    public final String avatar;
 
     public UserListViewModel(@NonNull Application application) {
         super(application);
         this.messageRepository = new MessageRepositoryImpl();
-        this.sharedPref = new SharedPref(application);
+        SharedPref sharedPref = new SharedPref(application);
         realTimeMessageLiveData = new MutableLiveData<>();
+        userMessagesListLiveData = new MutableLiveData<>();
         userId = sharedPref.getLongData("userId");
+        avatar = sharedPref.getStringData("avatar");
     }
 
-    public void sendMessage(UserMessage userMessage, Message message) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss+HH:mm");
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-        String timeStamp = simpleDateFormat.format(now);
-        message.setSentAt(timeStamp);
-        messageRepository.sendMessage(userMessage, message, userId, new MessageRepository.MessageResultListener<Void>() {
+    public void getUsersMessaged() {
+        messageRepository.getUsersMessaged(userId, new MessageRepository.MessageResultListener<List<UserMessage>>() {
             @Override
-            public void onSuccess(Void response) {
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d("hoangdeptrai", Objects.requireNonNull(t.getMessage()));
-            }
-        });
-    }
-
-    public void getMessage() {
-        messageRepository.getMessage(new MessageRepository.MessageResultListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                realTimeMessageLiveData.postValue(response);
+            public void onSuccess(List<UserMessage> response) {
+                userMessagesListLiveData.postValue(response);
             }
 
             @Override
@@ -64,6 +50,5 @@ public class UserListViewModel extends AndroidViewModel {
             }
         });
     }
-
 
 }
