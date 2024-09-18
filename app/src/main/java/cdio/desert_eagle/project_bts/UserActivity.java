@@ -4,23 +4,32 @@ import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 
 import cdio.desert_eagle.project_bts.adapter.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.ActivityUserBinding;
+import cdio.desert_eagle.project_bts.fragment.CommentBottomSheetFragment;
+import cdio.desert_eagle.project_bts.fragment.ReportDialog;
+import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 import cdio.desert_eagle.project_bts.viewmodel.UserViewModel;
 
 public class UserActivity extends AppCompatActivity {
 
     ActivityUserBinding binding;
+    private UserViewModel userViewModel;
+    private ProfileViewModel profileViewModel;
+    private ProfileAdapter profileAdapter;
+    private long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,34 +38,29 @@ public class UserActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // init data
-        UserViewModel userViewModel = new UserViewModel();
+        userViewModel = new UserViewModel();
+        profileViewModel = new ProfileViewModel(this.getApplication());
         Intent intent = getIntent();
-        long userId = intent.getLongExtra("userId", 0L);
+        userId = intent.getLongExtra("userId", 0L);
 
-        ProfileAdapter profileAdapter = new ProfileAdapter(this, new OnProfileItemListener() {
+        profileAdapter = new ProfileAdapter(this, profileViewModel, new OnProfileItemListener() {
             @Override
-            public void option() {
-
-            }
-
-            @Override
-            public void like(long userId, long postId, int position) {
-            }
-
-            @Override
-            public void liked(long userId, long postId, int position) {
-                userViewModel.reactionExisted(userId, postId, position);
+            public void option(Long postId) {
+                ReportDialog reportDialog = new ReportDialog(profileViewModel.userId, postId);
+                reportDialog.show(getSupportFragmentManager(), reportDialog.getTag());
             }
 
             @Override
             public void comment(Long postId) {
-
+                CommentBottomSheetFragment commentBottomSheetFragment = new CommentBottomSheetFragment(postId, profileViewModel.userId);
+                commentBottomSheetFragment.show(getSupportFragmentManager(), commentBottomSheetFragment.getTag());
             }
         });
 
 
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(this));
         binding.rvPosts.setAdapter(profileAdapter);
+        binding.rvPosts.setNestedScrollingEnabled(false);
         userViewModel.getAllUserPosts(userId);
         userViewModel.getUser(userId);
 
@@ -68,12 +72,31 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
+        binding.main.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                doEverything();
+                binding.main.setRefreshing(false);
+            }
+        });
+
+
+        binding.nsProfile.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    userViewModel.loadMoreUserPosts(userId);
+                }
+            }
+        });
+
+
+        // observer
         userViewModel.allPosts.observe(this, data -> {
             profileAdapter.updateData(data);
         });
 
         userViewModel.userResponseMutableLiveData.observe(this, data -> {
-            Log.d("hoangdeptrai", "onCreate: " + data.toString());
             Glide.with(binding.imgAvatar.getContext()).load(BASE_URL + "/api/images/" + data.getAvatar())
                     .into(binding.imgAvatar);
             binding.tvUsername.setText(data.getUsername());
@@ -84,12 +107,20 @@ public class UserActivity extends AppCompatActivity {
         });
 
         userViewModel.errorLiveData.observe(this, message -> {
-            Log.d("hoangdeptrai", "onCreate: " + message);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
-        userViewModel.existedReaction.observe(this, liked -> {
-            profileAdapter.updateItem(liked.getSecond(), liked.getFirst());
+
+        userViewModel.likedPostsStatusLiveData.observe(this, data -> {
+
+        });
+    }
+
+    private void doEverything() {
+        userViewModel.getUser(userId);
+        userViewModel.getAllUserPosts(userId);
+        userViewModel.allPosts.observe(this, data -> {
+            profileAdapter.resetData(data);
         });
     }
 
