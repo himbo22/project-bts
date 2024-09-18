@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/status_view"
+        android:layout_width="406dp"
+        android:layout_height="681dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/other_user_avatar"
+        android:layout_width="62dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/OtherUserAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/status_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/status_view"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/other_username"
+        android:layout_width="274dp"
+        android:layout_height="34dp"
+        android:contentDescription="@string/OtherUserName"
+        android:text="@string/username"
+        app:layout_constraintBottom_toTopOf="@+id/status_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toEndOf="@+id/other_user_avatar"
+        app:layout_constraintTop_toTopOf="@+id/status_view"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/status_image"
+        android:layout_width="407dp"
+        android:layout_height="388dp"
+        android:layout_marginBottom="228dp"
+        android:contentDescription="@string/status_image"
+        app:layout_constraintBottom_toBottomOf="@+id/status_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="406dp"
+        android:layout_height="86dp"
+        android:contentDescription="@string/status"
+        android:text="@string/status"
+        app:layout_constraintBottom_toBottomOf="@+id/status_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_image"
+        app:layout_constraintVertical_bias="0.372" />
+
+    <ImageButton
+        android:id="@+id/status_like_btn"
+        android:layout_width="56dp"
+        android:layout_height="52dp"
+        android:contentDescription="@string/status_like_btn"
+        app:layout_constraintBottom_toTopOf="@+id/status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_image"
+        app:srcCompat="@drawable/like" />
+
+    <ImageButton
+        android:id="@+id/status_comment_btn"
+        android:layout_width="56dp"
+        android:layout_height="52dp"
+        android:contentDescription="@string/status_comment_btn"
+        app:layout_constraintBottom_toTopOf="@+id/status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/status_like_btn"
+        app:layout_constraintTop_toBottomOf="@+id/status_image"
+        app:srcCompat="@drawable/comment" />
+
+    <TextView
+        android:id="@+id/status_like_count"
+        android:layout_width="48dp"
+        android:layout_height="43dp"
+        android:contentDescription="@string/status_like_count"
+        android:text="@string/like_count"
+        app:layout_constraintBottom_toTopOf="@+id/status"
+        app:layout_constraintEnd_toStartOf="@+id/status_comment_btn"
+        app:layout_constraintStart_toEndOf="@+id/status_like_btn"
+        app:layout_constraintTop_toBottomOf="@+id/status_image" />
+
+    <TextView
+        android:id="@+id/status_comment_count"
+        android:layout_width="48dp"
+        android:layout_height="43dp"
+        android:contentDescription="@string/status_comment_count"
+        android:text="@string/comment_count"
+        app:layout_constraintBottom_toTopOf="@+id/status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toEndOf="@+id/status_comment_btn"
+        app:layout_constraintTop_toBottomOf="@+id/status_image"
+        app:layout_constraintVertical_bias="0.454" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
