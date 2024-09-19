@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -14,9 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cdio.desert_eagle.project_bts.MessageActivity;
 import cdio.desert_eagle.project_bts.adapter.UserMessagedAdapter;
@@ -30,7 +28,6 @@ public class MessageFragment extends Fragment {
     FragmentMessageBinding binding;
     UserListViewModel userListViewModel;
     UserMessagedAdapter userMessagedAdapter;
-    private List<UserMessage> userMessages;
 
     private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -54,14 +51,13 @@ public class MessageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userListViewModel = new UserListViewModel(requireActivity().getApplication());
-        userMessages = new ArrayList<>();
         userMessagedAdapter = new UserMessagedAdapter(new BaseResult<UserMessage>() {
             @Override
             public void onSuccess(UserMessage response) {
                 Intent intent = new Intent(requireActivity(), MessageActivity.class);
-                intent.putExtra("userAvatar", userListViewModel.avatar);
                 intent.putExtra("receiverAvatar", response.getAvatar());
                 intent.putExtra("receiverId", response.getUserId());
+                intent.putExtra("username", response.getUsername());
                 activityResultLauncher.launch(intent);
             }
 
@@ -75,11 +71,22 @@ public class MessageFragment extends Fragment {
 
         userListViewModel.getUsersMessaged();
 
+        binding.svUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                userMessagedAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         // observer
         userListViewModel.userMessagesListLiveData.observe(requireActivity(), list -> {
             userMessagedAdapter.update(list);
-            userMessages.clear();
-            userMessages.addAll(list);
         });
 
     }

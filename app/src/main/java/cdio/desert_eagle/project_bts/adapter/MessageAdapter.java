@@ -22,8 +22,8 @@ import cdio.desert_eagle.project_bts.model.request.Message;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatViewHolder> {
 
-    private static final int SENDING = 1;
-    private static final int RECEIVING = 2; // RECEPTION is also right
+    private static final int SENDING = 0;
+    private static final int RECEIVING = 1; // RECEPTION is also right
     List<Message> chatMessages = new ArrayList<>();
     private final String userAvatar;
     private final String receiverAvatar;
@@ -35,7 +35,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
 
     @Override
     public int getItemViewType(int position) {
-        if (chatMessages.get(0).getType() == MESSAGE_TYPE.SENDING) {
+        if (chatMessages.get(position).getType() == MESSAGE_TYPE.SENDING) {
             return SENDING;
         } else {
             return RECEIVING;
@@ -45,40 +45,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
     @NonNull
     @Override
     public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case SENDING:
-                SendMessageBinding sendingBinding = SendMessageBinding
-                        .inflate(LayoutInflater.from(parent.getContext()),
-                                parent,
-                                false);
-                return new SendingViewHolder(sendingBinding);
-            case RECEIVING:
-                ReceiveMessageBinding receivingBinding = ReceiveMessageBinding
-                        .inflate(LayoutInflater.from(parent.getContext()),
-                                parent,
-                                false);
-                return new ReceivingViewHolder(receivingBinding);
+        if (viewType == SENDING) {
+            SendMessageBinding sendingBinding = SendMessageBinding
+                    .inflate(LayoutInflater.from(parent.getContext()),
+                            parent,
+                            false);
+            return new SendingViewHolder(sendingBinding);
         }
-        return null;
+        ReceiveMessageBinding receivingBinding = ReceiveMessageBinding
+                .inflate(LayoutInflater.from(parent.getContext()),
+                        parent,
+                        false);
+        return new ReceivingViewHolder(receivingBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Message message = chatMessages.get(position);
+        String sentAt = message.getSentAt().replace("T", " | ");
         if (holder.getItemViewType() == SENDING) {
-            SendMessageBinding binding = ((SendingViewHolder) holder).sendingBinding;
-            binding.tvMessage.setText(message.getMessage());
-            binding.tvSentAt.setText(message.getSentAt());
-            Glide.with(binding.imgAvatar.getContext())
-                    .load(BASE_URL + "/api/images/" + userAvatar)
-                    .into(binding.imgAvatar);
+            SendingViewHolder binding = ((SendingViewHolder) holder);
+            binding.bind(message, sentAt, userAvatar);
         } else {
-            ReceiveMessageBinding binding = ((ReceivingViewHolder) holder).receivingBinding;
-            binding.tvMessage.setText(message.getMessage());
-            binding.tvSentAt.setText(message.getSentAt());
-            Glide.with(binding.imgAvatar.getContext())
-                    .load(BASE_URL + "/api/images/" + receiverAvatar)
-                    .into(binding.imgAvatar);
+            ReceivingViewHolder binding = (ReceivingViewHolder) holder;
+            binding.bind(message, sentAt, receiverAvatar);
         }
     }
 
@@ -113,6 +103,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
             super(binding.getRoot());
             this.sendingBinding = binding;
         }
+
+        public void bind(Message message, String sentAt, String userAvatar) {
+            sendingBinding.tvMessage.setText(message.getMessage());
+            sendingBinding.tvSentAt.setText(sentAt);
+            Glide.with(sendingBinding.imgAvatar.getContext())
+                    .load(BASE_URL + "/api/images/" + userAvatar)
+                    .into(sendingBinding.imgAvatar);
+        }
     }
 
     public static class ReceivingViewHolder extends ChatViewHolder {
@@ -122,6 +120,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
         public ReceivingViewHolder(ReceiveMessageBinding binding) {
             super(binding.getRoot());
             this.receivingBinding = binding;
+        }
+
+        public void bind(Message message, String sentAt, String userAvatar) {
+            receivingBinding.tvMessage.setText(message.getMessage());
+            receivingBinding.tvSentAt.setText(sentAt);
+            Glide.with(receivingBinding.imgAvatar.getContext())
+                    .load(BASE_URL + "/api/images/" + userAvatar)
+                    .into(receivingBinding.imgAvatar);
         }
     }
 

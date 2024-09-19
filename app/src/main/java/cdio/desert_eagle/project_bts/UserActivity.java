@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -31,6 +35,16 @@ public class UserActivity extends AppCompatActivity {
     private ProfileAdapter profileAdapter;
     private long userId;
 
+    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+
+                }
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +55,8 @@ public class UserActivity extends AppCompatActivity {
         userViewModel = new UserViewModel();
         profileViewModel = new ProfileViewModel(this.getApplication());
         Intent intent = getIntent();
+        Intent intentToMessage = new Intent(this, MessageActivity.class);
         userId = intent.getLongExtra("userId", 0L);
-
         profileAdapter = new ProfileAdapter(this, profileViewModel, new OnProfileItemListener() {
             @Override
             public void option(Long postId) {
@@ -57,13 +71,23 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-
+        // init view
+        binding.btnMessage.setClickable(false);
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(this));
         binding.rvPosts.setAdapter(profileAdapter);
         binding.rvPosts.setNestedScrollingEnabled(false);
+
+
+        // call api
         userViewModel.getAllUserPosts(userId);
         userViewModel.getUser(userId);
 
+        binding.btnMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityResultLauncher.launch(intentToMessage);
+            }
+        });
 
         binding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +128,10 @@ public class UserActivity extends AppCompatActivity {
             binding.tvPostCount.setText(String.valueOf(data.getPost()));
             binding.tvFollowerCount.setText(String.valueOf(data.getFollowers()));
             binding.tvFollowingCount.setText(String.valueOf(data.getFollowing()));
+            intentToMessage.putExtra("receiverAvatar", data.getAvatar());
+            intentToMessage.putExtra("receiverId", data.getId());
+            intentToMessage.putExtra("username", data.getUsername());
+            binding.btnMessage.setEnabled(true);
         });
 
         userViewModel.errorLiveData.observe(this, message -> {

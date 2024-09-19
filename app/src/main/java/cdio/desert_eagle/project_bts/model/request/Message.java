@@ -14,6 +14,10 @@ public class Message {
     public Message() {
     }
 
+    public Message(String message) {
+        this.message = message;
+    }
+
     public Message(Long userId, String sentAt, String message, MESSAGE_TYPE type) {
         this.userId = userId;
         this.sentAt = sentAt;

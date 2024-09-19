@@ -4,25 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginVertical="10dp"
     android:layout_marginEnd="10dp">
 
-    <TextView
-        android:id="@+id/tvMessage"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llMessage"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/send_message_background"
-        android:padding="10dp"
-        android:text="@string/hoang"
-        android:textSize="15sp"
+        android:layout_marginHorizontal="5dp"
+        android:gravity="end"
         app:layout_constraintEnd_toStartOf="@id/imgAvatar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/send_message_background"
+            android:padding="10dp"
+            android:text="wd qwdh uqwd uqwd quwdh "
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:scaleType="fitXY"
         android:src="@drawable/logo_bts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,8 +45,8 @@
         android:layout_height="wrap_content"
         android:text="@string/_9_13_2024_9_30"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@id/tvMessage"
-        app:layout_constraintTop_toBottomOf="@id/tvMessage"
+        app:layout_constraintEnd_toEndOf="@id/llMessage"
+        app:layout_constraintTop_toBottomOf="@id/llMessage"
         tools:ignore="SmallSp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

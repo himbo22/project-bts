@@ -24,6 +24,11 @@ public class UserMessage {
         this.lastMessage = lastMessage;
     }
 
+    public UserMessage(Long userId, String avatar) {
+        this.userId = userId;
+        this.avatar = avatar;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -49,7 +54,7 @@ public class UserMessage {
         this.userId = userId;
     }
 
-    public UserMessage(Long userId, String username, String avatar) {
+    public UserMessage(String username, Long userId, String avatar) {
         this.userId = userId;
         this.username = username;
         this.avatar = avatar;
