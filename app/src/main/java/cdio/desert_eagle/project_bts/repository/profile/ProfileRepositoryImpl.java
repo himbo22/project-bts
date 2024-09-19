@@ -32,14 +32,14 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         apiService.getAllUserPosts(id, page, size).enqueue(new Callback<ResponseObject<PageResponse<UserPosts>>>() {
             @Override
             public void onResponse(Call<ResponseObject<PageResponse<UserPosts>>> call, Response<ResponseObject<PageResponse<UserPosts>>> response) {
-                assert response.body() != null;
-                listener.onSuccess(response.body().getData());
+                if (response.body() != null) {
+                    listener.onSuccess(response.body().getData());
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseObject<PageResponse<UserPosts>>> call, Throwable t) {
                 listener.onFailure(t);
-
             }
         });
     }
@@ -50,14 +50,14 @@ public class ProfileRepositoryImpl implements ProfileRepository {
             @Override
             public void onResponse(Call<ResponseObject<UserResponse>> call, Response<ResponseObject<UserResponse>> response) {
                 if (response.code() != 200) {
-                    Gson gson = new GsonBuilder().create();
-                    ResponseObject mError;
-                    try {
-                        mError = gson.fromJson(response.errorBody().string(), ResponseObject.class);
-                        listener.onSuccess(mError);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+//                    Gson gson = new GsonBuilder().create();
+//                    ResponseObject mError;
+//                    try {
+//                        mError = gson.fromJson(response.errorBody().string(), ResponseObject.class);
+                    listener.onFailure(new Throwable("Something goes wrong"));
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
                 } else {
                     listener.onSuccess(response.body());
                 }

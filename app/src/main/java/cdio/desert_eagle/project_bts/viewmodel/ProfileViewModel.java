@@ -1,6 +1,7 @@
 package cdio.desert_eagle.project_bts.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -29,6 +30,7 @@ public class ProfileViewModel extends Application {
     public MutableLiveData<String> errorLiveData;
     public Integer pages = 0;
     public Long userId;
+    private final int size = 30;
 
 
     public ProfileViewModel(@NonNull Application application) {
@@ -107,8 +109,8 @@ public class ProfileViewModel extends Application {
         });
     }
 
-    public void getAllUserPosts(Long id, int page, int size) {
-        profileRepository.getAllUserPosts(id, page, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
+    public void getAllUserPosts() {
+        profileRepository.getAllUserPosts(userId, pages, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
             @Override
             public void onSuccess(PageResponse<UserPosts> response) {
                 allPosts.postValue(response.content);
@@ -121,12 +123,12 @@ public class ProfileViewModel extends Application {
         });
     }
 
-    public void loadMoreUserPosts(Long id, int size) {
+    public void loadMoreUserPosts() {
         pages++;
-        profileRepository.getAllUserPosts(id, pages, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
+        profileRepository.getAllUserPosts(userId, pages, size, new ProfileRepository.ProfileResultListener<PageResponse<UserPosts>>() {
             @Override
             public void onSuccess(PageResponse<UserPosts> response) {
-                if (response.getContent() == null) {
+                if (response.getContent().isEmpty()) {
                     pages--;
                 } else {
                     allPosts.postValue(response.getContent());

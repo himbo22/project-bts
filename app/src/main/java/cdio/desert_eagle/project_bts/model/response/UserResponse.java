@@ -1,5 +1,7 @@
 package cdio.desert_eagle.project_bts.model.response;
 
+import androidx.annotation.NonNull;
+
 public class UserResponse {
     private long id;
     private String username;
@@ -9,6 +11,12 @@ public class UserResponse {
     private long post;
     private long followers;
     private long following;
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getId() + "/" + getUsername() + "/" + getEmail();
+    }
 
     public long getId() {
         return id;

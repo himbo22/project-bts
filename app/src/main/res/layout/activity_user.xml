@@ -27,16 +27,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgAvatar"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/circle"
-                android:src="@drawable/logo_bts"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/circleImageView" />
 
             <TextView
                 android:id="@+id/tvUsername"
@@ -44,22 +45,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/hoang"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imgAvatar" />
 
             <TextView
-                android:id="@+id/tvBio"
+                android:id="@+id/tvAboutMe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/this_is_a_bio"
-                android:textSize="18sp"
+                android:text="@string/about_me"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvUsername" />
+
+            <TextView
+                android:id="@+id/tvBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAboutMe" />
 
             <View
                 android:layout_width="match_parent"
@@ -76,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/_120"
+                android:text="@string/_0"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +109,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/_120"
+                android:text="@string/_0"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@id/tvFollowingCount"
@@ -124,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/_120"
+                android:text="@string/_0"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -162,6 +172,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/solid_button"
+                android:enabled="false"
                 android:paddingHorizontal="10dp"
                 android:text="@string/message"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -13,19 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -43,8 +40,6 @@ public class ProfileFragment extends Fragment {
 
     ProfileViewModel profileViewModel;
     ProfileAdapter profileAdapter;
-    private boolean loading = true;
-    int pastVisibleItems, visibleItemCount, totalItemCount;
     FragmentProfileBinding binding;
 
     private final ActivityResultLauncher<Intent> editProfileResultLauncher = registerForActivityResult(
@@ -100,10 +95,11 @@ public class ProfileFragment extends Fragment {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-        profileAdapter = new ProfileAdapter(getContext(), profileViewModel, new OnProfileItemListener() {
+        profileAdapter = new ProfileAdapter(requireActivity(), profileViewModel, new OnProfileItemListener() {
             @Override
-            public void option() {
-
+            public void option(Long postId) {
+                ReportDialog reportDialog = new ReportDialog(profileViewModel.userId, postId);
+                reportDialog.show(getParentFragmentManager(), reportDialog.getTag());
             }
 
             @Override
@@ -114,13 +110,12 @@ public class ProfileFragment extends Fragment {
         });
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvPosts.setAdapter(profileAdapter);
-        profileViewModel.getAllUserPosts(profileViewModel.userId, profileViewModel.pages, 20);
+        profileViewModel.getAllUserPosts();
         profileViewModel.getUserInformation();
 
         // observer
         profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> {
             profileAdapter.updateData(userPostsLiveData);
-            loading = true;
         });
 
         profileViewModel.userResponseMutableLiveData.observe(requireActivity(), data -> {
@@ -139,23 +134,11 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        binding.rvPosts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.nsProfile.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    RecyclerView.LayoutManager lm = binding.rvPosts.getLayoutManager();
-                    assert lm != null;
-                    visibleItemCount = lm.getChildCount();
-                    totalItemCount = lm.getItemCount();
-                    pastVisibleItems = ((LinearLayoutManager) lm).findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false;
-                            profileViewModel.loadMoreUserPosts(profileViewModel.userId, 20);
-                        }
-                    }
+            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    profileViewModel.loadMoreUserPosts();
                 }
             }
         });
@@ -165,7 +148,7 @@ public class ProfileFragment extends Fragment {
 
     private void doEverything() {
         profileViewModel.getUserInformation();
-        profileViewModel.getAllUserPosts(profileViewModel.userId, 0, 20);
+        profileViewModel.getAllUserPosts();
         profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> profileAdapter.resetData(userPostsLiveData));
     }
 

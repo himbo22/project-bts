@@ -2,6 +2,7 @@ package cdio.desert_eagle.project_bts.adapter;
 
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         UserPosts userPost = userPosts.get(position);
+
         profileViewModel.reactionExisted(userPost.getAuthor(), userPost.getId(), new BaseResult<Boolean>() {
             @Override
             public void onSuccess(Boolean response) {
@@ -85,7 +87,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
         }
 
         holder.binding.imgOption.setOnClickListener(v -> {
-//            listener.option();
+            listener.option(userPost.getId());
         });
 
 
@@ -113,7 +115,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
                 public void onFailure(Throwable t) {
                 }
             });
-//            listener.react(liked, userPost.getAuthor(), userPost.getId());
         });
         holder.binding.imgComment.setOnClickListener(v -> {
             listener.comment(userPost.getId());
@@ -138,11 +139,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateData(List<UserPosts> newUserPosts) {
         userPosts.addAll(newUserPosts);
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void resetData(List<UserPosts> newUserPosts) {
         userPosts.clear();
         userPosts.addAll(newUserPosts);
@@ -151,7 +154,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 
     public void updateItem(int pos, UserPosts userPosts) {
         this.userPosts.set(pos, userPosts);
-        notifyDataSetChanged();
     }
 
 }

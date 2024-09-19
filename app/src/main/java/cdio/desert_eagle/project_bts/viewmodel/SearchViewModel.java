@@ -45,7 +45,6 @@ public class SearchViewModel extends ViewModel {
                     pages--;
                     return;
                 }
-                Log.d("hoangdeptrai", "onSuccess: cac");
                 usersSearchResult.postValue(response);
             }
 

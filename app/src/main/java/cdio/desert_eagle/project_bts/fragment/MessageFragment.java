@@ -1,26 +1,93 @@
 package cdio.desert_eagle.project_bts.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
-import cdio.desert_eagle.project_bts.R;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import cdio.desert_eagle.project_bts.MessageActivity;
+import cdio.desert_eagle.project_bts.adapter.UserMessagedAdapter;
+import cdio.desert_eagle.project_bts.databinding.FragmentMessageBinding;
+import cdio.desert_eagle.project_bts.model.request.UserMessage;
+import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.viewmodel.UserListViewModel;
 
 public class MessageFragment extends Fragment {
 
+    FragmentMessageBinding binding;
+    UserListViewModel userListViewModel;
+    UserMessagedAdapter userMessagedAdapter;
+
+    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+
+                }
+            }
+    );
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentMessageBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userListViewModel = new UserListViewModel(requireActivity().getApplication());
+        userMessagedAdapter = new UserMessagedAdapter(new BaseResult<UserMessage>() {
+            @Override
+            public void onSuccess(UserMessage response) {
+                Intent intent = new Intent(requireActivity(), MessageActivity.class);
+                intent.putExtra("receiverAvatar", response.getAvatar());
+                intent.putExtra("receiverId", response.getUserId());
+                intent.putExtra("username", response.getUsername());
+                activityResultLauncher.launch(intent);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+        binding.rvUsers.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        binding.rvUsers.setAdapter(userMessagedAdapter);
+
+        userListViewModel.getUsersMessaged();
+
+        binding.svUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                userMessagedAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        // observer
+        userListViewModel.userMessagesListLiveData.observe(requireActivity(), list -> {
+            userMessagedAdapter.update(list);
+        });
+
     }
 }

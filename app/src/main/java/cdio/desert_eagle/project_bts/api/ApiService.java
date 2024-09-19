@@ -2,12 +2,15 @@ package cdio.desert_eagle.project_bts.api;
 
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 import cdio.desert_eagle.project_bts.model.request.CommentRequest;
 import cdio.desert_eagle.project_bts.model.request.LoginRequest;
 import cdio.desert_eagle.project_bts.model.response.Comment;
 import cdio.desert_eagle.project_bts.model.response.CommentResponse;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
+import cdio.desert_eagle.project_bts.model.response.Report;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
@@ -52,6 +55,14 @@ public interface ApiService {
     @GET("/api/reactions/user/{user_id}/post/{post_id}")
     Call<Boolean> existedReaction(@Path("user_id") Long userId, @Path("post_id") Long postId);
 
+    @GET("/api/reactions/liked/{userId}/{userIdPostsOwner}")
+    Call<List<Boolean>> likedPosts(
+            @Path("userId") Long userId,
+            @Path("userIdPostsOwner") Long userIdPostsOwner,
+            @Query("page") int page,
+            @Query("size") int size
+    );
+
     @DELETE("/api/reactions/delete/user/{user_id}/post/{post_id}")
     Call<ResponseObject<String>> deleteReaction(@Path("user_id") Long userId, @Path("post_id") Long postId);
 
@@ -88,5 +99,13 @@ public interface ApiService {
             @Part("username") RequestBody username,
             @Nullable @Part("bio") RequestBody bio,
             @Nullable @Part MultipartBody.Part image
+    );
+
+    // report
+    @POST("/api/reports/report/{userId}/{postId}")
+    Call<ResponseObject<Report>> reportPost(
+            @Path("userId") Long userId,
+            @Path("postId") Long postId,
+            @Body String reason
     );
 }

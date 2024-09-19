@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // observe data
         loginViewModel.loginLiveData.observe(this, data -> {
-            loginViewModel.saveUserInformation(data.getId());
+            loginViewModel.saveUserInformation(data.getId(), data.getAvatar());
             startActivity(new Intent(this, MainActivity.class));
             finishAffinity();
         });

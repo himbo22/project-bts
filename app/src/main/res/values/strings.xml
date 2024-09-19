@@ -25,4 +25,10 @@
     <string name="confirm">Confirm</string>
     <string name="discard">Discard</string>
     <string name="about_me">About me</string>
+    <string name="_9_13_2024_9_30">9/13/2024 9:30</string>
+    <string name="_0">0</string>
+    <string name="report">Report</string>
+    <string name="why_are_you_reporting_this_post">Why are you reporting this post?</string>
+    <string name="submit">SUBMIT</string>
+    <string name="send">Send</string>
 </resources>
