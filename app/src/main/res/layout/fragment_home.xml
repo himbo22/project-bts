@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,64 +8,74 @@
     tools:context=".view.fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/name_app"
-        android:layout_width="257dp"
-        android:layout_height="49dp"
-        android:contentDescription="@string/name_app"
-        android:fontFamily="@font/italianoregular"
-        android:text="@string/beneath_the_stars"
-        android:textSize="46sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <ImageView
-        android:id="@+id/user_avatar"
-        android:layout_width="57dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="3dp"
-        android:contentDescription="@string/user_avatar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.011"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_app"
-        app:layout_constraintVertical_bias="0.011"
-        tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/Add_status"
-        android:layout_width="334dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="11dp"
-        android:backgroundTint="#27D9DF"
-        android:contentDescription="@string/add_status_button"
-        android:text="@string/add_status"
-        android:textColorLink="#090608"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.625"
-        app:layout_constraintStart_toEndOf="@+id/user_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/name_app"
-        app:layout_constraintVertical_bias="0.001" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Add_status"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent" >
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_app"
+                android:weightSum="4">
+
+                <ImageButton
+                    android:id="@+id/user_avatar"
+                    android:layout_width="44dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/user_avatar"
+                    tools:src="@tools:sample/avatars"/>
+
+                <Button
+                    android:id="@+id/Add_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#27D9DF"
+                    android:textSize="20sp"
+                    android:contentDescription="@string/add_status_button"
+                    android:text="@string/add_status"
+                    android:textColorLink="#090608" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/name_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/name_app"
+                android:fontFamily="@font/italianoregular"
+                android:text="@string/beneath_the_stars"
+                android:textSize="46sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/other_user_avatar"
@@ -34,21 +34,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/other_user_avatar"
+        app:layout_constraintTop_toBottomOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
         android:id="@+id/status"
-        android:layout_width="411dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="68dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/status"
         android:text="@string/status"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status_image" />
+        app:layout_constraintTop_toBottomOf="@+id/other_user_avatar" />
 
     <ImageButton
         android:id="@+id/status_like_btn"

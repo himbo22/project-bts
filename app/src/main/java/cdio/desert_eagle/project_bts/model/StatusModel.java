@@ -1,7 +1,6 @@
 package cdio.desert_eagle.project_bts.model;
 
 public class StatusModel {
-    public class Status {
         private int avatarResId;
         private String username;
         private String statusText;
@@ -9,8 +8,7 @@ public class StatusModel {
         private int likeCount;
         private int commentCount;
 
-        // Constructor
-        public Status(int avatarResId, String username, String statusText, int statusImageResId, int likeCount, int commentCount) {
+        public StatusModel(int avatarResId, String username, String statusText, int statusImageResId, int likeCount, int commentCount) {
             this.avatarResId = avatarResId;
             this.username = username;
             this.statusText = statusText;
@@ -19,7 +17,6 @@ public class StatusModel {
             this.commentCount = commentCount;
         }
 
-        // Getters
         public int getAvatarResId() {
             return avatarResId;
         }
@@ -43,5 +40,5 @@ public class StatusModel {
         public int getCommentCount() {
             return commentCount;
         }
-    }
+
 }

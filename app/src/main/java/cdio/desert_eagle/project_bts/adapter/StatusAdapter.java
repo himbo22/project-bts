@@ -17,10 +17,10 @@ import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.model.StatusModel;
 
 public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusViewHolder> {
-    public List<StatusModel.Status> statusList;
+    public List<StatusModel> statusList;
     public Context context;
     public LayoutInflater layoutInflater;
-    public StatusAdapter(Context context,List<StatusModel.Status> statusList ){
+    public StatusAdapter(Context context,List<StatusModel> statusList ){
         this.context = context;
         this.statusList = statusList;
         layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -34,7 +34,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusView
 
     @Override
     public void onBindViewHolder(@NonNull StatusAdapter.StatusViewHolder holder, int position) {
-        StatusModel.Status currentStatus = statusList.get(position);
+        StatusModel currentStatus = statusList.get(position);
         holder.OtherUserName.setText(currentStatus.getUsername());
         holder.Status.setText(currentStatus.getStatusText());
         holder.LikeCount.setText(String.valueOf(currentStatus.getLikeCount()));
