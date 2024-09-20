@@ -74,4 +74,7 @@
     <string name="why_are_you_reporting_this_post">Why are you reporting this post?</string>
     <string name="submit">SUBMIT</string>
     <string name="send">Send</string>
+    <string name="what_s_is_on_your_mind">What\'s is on your mind?</string>
+    <string name="create_post">Create post</string>
+    <string name="add_image">Add Image</string>
 </resources>
