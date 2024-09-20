@@ -1,20 +1,19 @@
 package cdio.desert_eagle.project_bts.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import cdio.desert_eagle.project_bts.data.SharedPref;
+import cdio.desert_eagle.project_bts.data.local.SharedPref;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
 import cdio.desert_eagle.project_bts.model.response.UserResponse;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepository;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepositoryImpl;
 import cdio.desert_eagle.project_bts.repository.reaction.ReactionRepository;

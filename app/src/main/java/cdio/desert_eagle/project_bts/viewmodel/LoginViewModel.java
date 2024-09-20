@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Objects;
 
-import cdio.desert_eagle.project_bts.data.SharedPref;
+import cdio.desert_eagle.project_bts.data.local.SharedPref;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.repository.auth.AuthRepository;
@@ -28,10 +28,11 @@ public class LoginViewModel extends AndroidViewModel {
         errorLiveData = new MutableLiveData<>();
     }
 
-    public void saveUserInformation(Long userId, String avatar) {
+    public void saveUserInformation(Long userId, String avatar, String username) {
         sharedPref.setStringData("loggedIn", "yes");
         sharedPref.setLongData("userId", userId);
         sharedPref.setStringData("avatar", avatar);
+        sharedPref.setStringData("username", username);
     }
 
 

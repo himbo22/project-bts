@@ -1,7 +1,7 @@
 package cdio.desert_eagle.project_bts.repository.reaction;
 
-import cdio.desert_eagle.project_bts.api.ApiService;
-import cdio.desert_eagle.project_bts.api.RetrofitClient;
+import cdio.desert_eagle.project_bts.data.remote.ApiService;
+import cdio.desert_eagle.project_bts.data.remote.RetrofitClient;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import retrofit2.Call;

@@ -2,7 +2,7 @@ package cdio.desert_eagle.project_bts.repository.reaction;
 
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 
 public interface ReactionRepository {
     void deleteReaction(Long user_id, Long post_id, ReactionResultListener<ResponseObject<String>> listener);

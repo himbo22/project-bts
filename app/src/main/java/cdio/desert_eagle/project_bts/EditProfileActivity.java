@@ -23,7 +23,7 @@ import java.util.Objects;
 
 import cdio.desert_eagle.project_bts.databinding.ActivityEditProfileBinding;
 import cdio.desert_eagle.project_bts.fragment.UpdateProfileDialog;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.viewmodel.UpdateProfileViewModel;
 
 public class EditProfileActivity extends AppCompatActivity {

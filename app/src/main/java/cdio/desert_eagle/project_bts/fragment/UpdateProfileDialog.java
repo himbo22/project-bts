@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 
 public class UpdateProfileDialog extends DialogFragment {
 

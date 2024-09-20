@@ -20,6 +20,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/cac"
+        android:scaleType="fitXY"
         android:src="@drawable/logo_bts"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -1,15 +1,13 @@
 package cdio.desert_eagle.project_bts.repository.auth;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import cdio.desert_eagle.project_bts.api.ApiService;
-import cdio.desert_eagle.project_bts.api.RetrofitClient;
+import cdio.desert_eagle.project_bts.data.remote.ApiService;
+import cdio.desert_eagle.project_bts.data.remote.RetrofitClient;
 import cdio.desert_eagle.project_bts.model.request.LoginRequest;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
@@ -73,7 +71,6 @@ public class AuthRepositoryImpl implements AuthRepository {
 
             @Override
             public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
-                Log.d("hoangdeptrai", "onFailure: " + t.getMessage());
                 listener.onFailure(t);
             }
         });

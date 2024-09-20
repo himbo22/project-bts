@@ -30,7 +30,7 @@ import cdio.desert_eagle.project_bts.EditProfileActivity;
 import cdio.desert_eagle.project_bts.LoginActivity;
 import cdio.desert_eagle.project_bts.MainActivity;
 import cdio.desert_eagle.project_bts.R;
-import cdio.desert_eagle.project_bts.adapter.OnProfileItemListener;
+import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentProfileBinding;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;

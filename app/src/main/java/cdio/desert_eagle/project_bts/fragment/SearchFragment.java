@@ -19,7 +19,7 @@ import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.UserActivity;
 import cdio.desert_eagle.project_bts.adapter.UserAdapter;
 import cdio.desert_eagle.project_bts.model.response.User;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.viewmodel.SearchViewModel;
 
 public class SearchFragment extends Fragment {

@@ -3,7 +3,7 @@ package cdio.desert_eagle.project_bts.repository.search;
 import java.util.List;
 
 import cdio.desert_eagle.project_bts.model.response.User;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 
 public interface SearchRepository {
 

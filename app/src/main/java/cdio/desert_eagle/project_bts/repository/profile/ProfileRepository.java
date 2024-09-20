@@ -5,7 +5,7 @@ import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
 import cdio.desert_eagle.project_bts.model.response.UserResponse;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 

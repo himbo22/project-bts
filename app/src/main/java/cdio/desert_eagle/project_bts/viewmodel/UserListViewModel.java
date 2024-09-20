@@ -1,20 +1,14 @@
 package cdio.desert_eagle.project_bts.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-import cdio.desert_eagle.project_bts.data.SharedPref;
-import cdio.desert_eagle.project_bts.model.request.Message;
+import cdio.desert_eagle.project_bts.data.local.SharedPref;
 import cdio.desert_eagle.project_bts.model.request.UserMessage;
 import cdio.desert_eagle.project_bts.repository.message.MessageRepository;
 import cdio.desert_eagle.project_bts.repository.message.MessageRepositoryImpl;

@@ -21,8 +21,9 @@ import java.util.List;
 
 import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.databinding.ItemRecyclerviewProfileBinding;
+import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {

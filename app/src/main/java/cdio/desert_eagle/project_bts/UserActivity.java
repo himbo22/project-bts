@@ -19,7 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 
-import cdio.desert_eagle.project_bts.adapter.OnProfileItemListener;
+import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.ActivityUserBinding;
 import cdio.desert_eagle.project_bts.fragment.CommentBottomSheetFragment;

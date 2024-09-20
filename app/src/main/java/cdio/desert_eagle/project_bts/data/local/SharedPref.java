@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.data;
+package cdio.desert_eagle.project_bts.data.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;

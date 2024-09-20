@@ -20,7 +20,7 @@ import cdio.desert_eagle.project_bts.MessageActivity;
 import cdio.desert_eagle.project_bts.adapter.UserMessagedAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentMessageBinding;
 import cdio.desert_eagle.project_bts.model.request.UserMessage;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.viewmodel.UserListViewModel;
 
 public class MessageFragment extends Fragment {
