@@ -72,22 +72,7 @@ public class SignupActivity extends AppCompatActivity {
         TextView lo = findViewById(R.id.login);
         ImageView imgCamera = findViewById(R.id.imgCamera);
 
-
-        imgCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    requestPermissionLauncher.launch(Arrays.toString(new String[]{
-                            READ_MEDIA_IMAGES,
-                            READ_MEDIA_VISUAL_USER_SELECTED
-                    }));
-                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
-                    requestPermissionLauncher.launch(READ_MEDIA_IMAGES);
-                } else {
-                    requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE);
-                }
-            }
-        });
+        imgCamera.setOnClickListener(v -> onclickRequestPermission());
 
         //  Sign up
         Sign.setOnClickListener(v -> {
@@ -98,15 +83,17 @@ public class SignupActivity extends AppCompatActivity {
             if (email.isBlank() || username.isBlank() || password.isBlank() || bio.isBlank() || avatarUri == null) {
                 return;
             }
+            binding.pbLoading.setVisibility(View.VISIBLE);
             registerViewModel.register(username, password, email, bio, avatarUri);
         });
         lo.setOnClickListener(v -> {
-
+            finish();
         });
 
         // observer
         registerViewModel.registerLiveData.observe(this, data -> {
             Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+            binding.pbLoading.setVisibility(View.GONE);
             startActivity(new Intent(this, MainActivity.class));
             finishAffinity();
         });

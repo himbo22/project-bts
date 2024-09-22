@@ -14,8 +14,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cdio.desert_eagle.project_bts.adapter.ViewPagerAdapter;
+import cdio.desert_eagle.project_bts.listener.ViewPagerNavigator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPagerNavigator {
     ViewPager2 vpMain;
     TabLayout tlMain;
     private static final int[] tabIcons = {
@@ -72,4 +73,8 @@ public class MainActivity extends AppCompatActivity {
         }, 30000L);
     }
 
+    @Override
+    public void moveToFragment(int fragmentIndex) {
+        vpMain.setCurrentItem(fragmentIndex,true);
+    }
 }

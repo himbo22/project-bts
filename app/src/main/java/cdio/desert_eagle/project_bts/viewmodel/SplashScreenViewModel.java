@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import cdio.desert_eagle.project_bts.data.SharedPref;
+import cdio.desert_eagle.project_bts.data.local.SharedPref;
 
 public class SplashScreenViewModel extends AndroidViewModel {
 

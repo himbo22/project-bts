@@ -57,6 +57,22 @@
         app:layout_constraintTop_toBottomOf="@+id/topSection"
         tools:listitem="@layout/user_item" />
 
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateBehavior="repeat"
+        android:indeterminateTint="@color/primary_color_2"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewUsers"
+        app:layout_constraintEnd_toEndOf="@id/recyclerViewUsers"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/recyclerViewUsers"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewUsers"
+        app:layout_constraintVertical_bias="0.5" />
+
     <!-- Phần dưới cùng  -->
     <LinearLayout
         android:id="@+id/navLayout"

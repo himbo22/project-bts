@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 
-import cdio.desert_eagle.project_bts.data.SharedPref;
+import cdio.desert_eagle.project_bts.data.local.SharedPref;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.repository.auth.AuthRepository;
@@ -59,6 +59,7 @@ public class RegisterViewModel extends AndroidViewModel {
                 if (response.getData() != null) {
                     sharedPref.setLongData("userId", response.getData().getId());
                     sharedPref.setStringData("avatar", response.getData().getAvatar());
+                    sharedPref.setStringData("username", response.getData().getUsername());
                     sharedPref.setStringData("loggedIn", "yes");
                     registerLiveData.postValue(response.getData());
                 } else {

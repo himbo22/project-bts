@@ -31,4 +31,13 @@
     <string name="why_are_you_reporting_this_post">Why are you reporting this post?</string>
     <string name="submit">SUBMIT</string>
     <string name="send">Send</string>
+    <string name="what_s_is_on_your_mind">What\'s is on your mind?</string>
+    <string name="create_post">Create post</string>
+    <string name="add_image">Add Image</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="email">Email</string>
+    <string name="please_enter_your_email_address_to_receive_an_otp">Please enter your email address to receive an OTP</string>
+    <string name="otp">OTP</string>
+    <string name="verify">Verify</string>
+    <string name="send_again_in">Send again in:</string>
 </resources>

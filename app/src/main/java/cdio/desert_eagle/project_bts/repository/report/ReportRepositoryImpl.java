@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
-import cdio.desert_eagle.project_bts.api.ApiService;
-import cdio.desert_eagle.project_bts.api.RetrofitClient;
+import cdio.desert_eagle.project_bts.data.remote.ApiService;
+import cdio.desert_eagle.project_bts.data.remote.RetrofitClient;
 import cdio.desert_eagle.project_bts.model.response.Report;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import retrofit2.Call;

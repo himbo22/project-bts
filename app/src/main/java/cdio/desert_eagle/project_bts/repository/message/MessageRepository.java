@@ -4,7 +4,7 @@ import java.util.List;
 
 import cdio.desert_eagle.project_bts.model.request.Message;
 import cdio.desert_eagle.project_bts.model.request.UserMessage;
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 
 public interface MessageRepository {
 

@@ -8,6 +8,7 @@ public class Post {
     public String content;
     public String createdAt;
     public User author;
+    public Comment comment;
 
     @NonNull
     @Override

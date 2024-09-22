@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 
-import cdio.desert_eagle.project_bts.data.SharedPref;
+import cdio.desert_eagle.project_bts.data.local.SharedPref;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepository;
@@ -22,8 +22,8 @@ public class UpdateProfileViewModel extends AndroidViewModel {
     private final ProfileRepository profileRepository;
     private final Application application;
     private final SharedPref sharedPref;
-    public MutableLiveData<User> userMutableLiveData;
     public MutableLiveData<String> errorLiveData;
+    public MutableLiveData<User> userMutableLiveData;
 
     public UpdateProfileViewModel(@NonNull Application application) {
         super(application);
@@ -53,7 +53,7 @@ public class UpdateProfileViewModel extends AndroidViewModel {
                 if (!response.getStatus().equals("200")) {
                     errorLiveData.postValue(response.getMessage());
                 } else {
-                    userMutableLiveData.postValue(response.getData());
+                    userMutableLiveData.setValue(response.getData());
                 }
             }
 

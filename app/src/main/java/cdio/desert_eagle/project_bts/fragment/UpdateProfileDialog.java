@@ -2,14 +2,13 @@ package cdio.desert_eagle.project_bts.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import cdio.desert_eagle.project_bts.repository.BaseResult;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 
 public class UpdateProfileDialog extends DialogFragment {
 
@@ -34,18 +33,8 @@ public class UpdateProfileDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(positiveMessage, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        listener.onSuccess(true);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        listener.onSuccess(false);
-                    }
-                });
+                .setPositiveButton(positiveMessage, (dialog, which) -> listener.onSuccess(true))
+                .setNegativeButton("Cancel", (dialog, which) -> listener.onSuccess(false));
         return builder.create();
     }
 }

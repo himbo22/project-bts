@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -19,11 +17,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 
-import cdio.desert_eagle.project_bts.adapter.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.ActivityUserBinding;
 import cdio.desert_eagle.project_bts.fragment.CommentBottomSheetFragment;
 import cdio.desert_eagle.project_bts.fragment.ReportDialog;
+import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 import cdio.desert_eagle.project_bts.viewmodel.UserViewModel;
 
@@ -35,13 +33,9 @@ public class UserActivity extends AppCompatActivity {
     private ProfileAdapter profileAdapter;
     private long userId;
 
-    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult o) {
-
-                }
+            o -> {
             }
     );
 
@@ -57,7 +51,7 @@ public class UserActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Intent intentToMessage = new Intent(this, MessageActivity.class);
         userId = intent.getLongExtra("userId", 0L);
-        profileAdapter = new ProfileAdapter(this, profileViewModel, new OnProfileItemListener() {
+        profileAdapter = new ProfileAdapter(2, profileViewModel, new OnProfileItemListener() {
             @Override
             public void option(Long postId) {
                 ReportDialog reportDialog = new ReportDialog(profileViewModel.userId, postId);

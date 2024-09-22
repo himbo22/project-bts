@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import cdio.desert_eagle.project_bts.R;
@@ -46,6 +48,7 @@ public class CommentBottomSheetFragment extends BottomSheetDialogFragment {
     ConstraintLayout clComment;
     AppCompatButton btnComment;
     RecyclerView.LayoutManager layoutManager;
+    ProgressBar pbLoading;
     List<CommentResponse> commentResponseList = new ArrayList<>();
     private boolean loading = true;
     int pastVisibleItems, visibleItemCount, totalItemCount;
@@ -80,6 +83,12 @@ public class CommentBottomSheetFragment extends BottomSheetDialogFragment {
         etComment = view.findViewById(R.id.etComment);
         clComment = view.findViewById(R.id.clComment);
         btnComment = view.findViewById(R.id.btnComment);
+        pbLoading = view.findViewById(R.id.pbLoading);
+
+        // show progress bar
+        pbLoading.setVisibility(View.VISIBLE);
+
+
         // init data
         commentViewModel = new CommentViewModel();
         commentAdapter = new CommentAdapter(requireContext(), commentResponseList);
@@ -118,17 +127,20 @@ public class CommentBottomSheetFragment extends BottomSheetDialogFragment {
         commentViewModel.commentResponseLiveData.observe(requireActivity(), data -> {
             commentAdapter.updateData(data);
             loading = true;
+            pbLoading.setVisibility(View.GONE);
         });
 
-        commentViewModel.commentMutableLiveData.observe(requireActivity(), data -> {
+
+        commentViewModel.commentAdditionalLiveData.observe(requireActivity(), data -> {
             if (data != null) {
                 commentAdapter.addSingleData(new CommentResponse(
                         data.getId(),
-                        "ae4b2f90c146473ead46a48a30074d56.jpg",
-                        "hoanglon",
+                        data.getAuthor().getAvatar(),
+                        data.getAuthor().getUsername(),
                         data.getContent()
                 ));
                 rvComment.smoothScrollToPosition(Objects.requireNonNull(rvComment.getAdapter()).getItemCount());
+                pbLoading.setVisibility(View.GONE);
             }
         });
 
@@ -144,6 +156,7 @@ public class CommentBottomSheetFragment extends BottomSheetDialogFragment {
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
                     if (loading) {
+                        pbLoading.setVisibility(View.VISIBLE);
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             loading = false;
                             commentViewModel.loadMoreComments(postId, 20);
@@ -166,7 +179,7 @@ public class CommentBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 if (!etComment.getText().toString().isBlank()) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss+HH:mm");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss+HH:mm", new Locale("vie", "VNM"));
                         Calendar calendar = Calendar.getInstance();
                         Date now = calendar.getTime();
                         String timeStamp = simpleDateFormat.format(now);

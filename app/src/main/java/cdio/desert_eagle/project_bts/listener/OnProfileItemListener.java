@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.adapter;
+package cdio.desert_eagle.project_bts.listener;
 
 public interface OnProfileItemListener {
     void option(Long postId);

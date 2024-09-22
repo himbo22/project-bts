@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.api;
+package cdio.desert_eagle.project_bts.data.remote;
 
 import androidx.annotation.Nullable;
 
@@ -9,6 +9,7 @@ import cdio.desert_eagle.project_bts.model.request.LoginRequest;
 import cdio.desert_eagle.project_bts.model.response.Comment;
 import cdio.desert_eagle.project_bts.model.response.CommentResponse;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
+import cdio.desert_eagle.project_bts.model.response.Post;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.Report;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
@@ -50,6 +51,24 @@ public interface ApiService {
     @GET("/api/posts/user/{id}")
     Call<ResponseObject<PageResponse<UserPosts>>> getAllUserPosts(@Path("id") Long id, @Query("page") int page, @Query("size") int size);
 
+    @GET("/api/posts/all")
+    Call<ResponseObject<PageResponse<Post>>> getAllPosts(
+            @Query("page") int page,
+            @Query("size") int size
+    );
+
+    @Multipart
+    @Headers("multipart:true")
+    @POST("/api/posts/create")
+    Call<ResponseObject<Post>> createPost(
+            @Part("userId") RequestBody userId,
+            @Part("caption") RequestBody caption,
+            @Part("createdAt") RequestBody createAt,
+            @Part MultipartBody.Part content
+    );
+
+    @DELETE("/api/posts/delete/{id}")
+    Call<ResponseObject<String>> deletePost(@Path("id") Long postId);
 
     // reaction
     @GET("/api/reactions/user/{user_id}/post/{post_id}")

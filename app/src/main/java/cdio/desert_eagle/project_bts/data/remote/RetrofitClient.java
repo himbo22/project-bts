@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.api;
+package cdio.desert_eagle.project_bts.data.remote;
 
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
