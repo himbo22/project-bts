@@ -8,12 +8,14 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import cdio.desert_eagle.project_bts.data.local.SharedPref;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
 import cdio.desert_eagle.project_bts.model.response.UserResponse;
-import cdio.desert_eagle.project_bts.listener.BaseResult;
+import cdio.desert_eagle.project_bts.repository.post.PostRepository;
+import cdio.desert_eagle.project_bts.repository.post.PostRepositoryImpl;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepository;
 import cdio.desert_eagle.project_bts.repository.profile.ProfileRepositoryImpl;
 import cdio.desert_eagle.project_bts.repository.reaction.ReactionRepository;
@@ -22,11 +24,13 @@ import cdio.desert_eagle.project_bts.repository.reaction.ReactionRepositoryImpl;
 public class ProfileViewModel extends Application {
     private final ProfileRepository profileRepository;
     private final ReactionRepository reactionRepository;
+    private final PostRepository postRepository;
     private final SharedPref sharedPref;
     public MutableLiveData<List<UserPosts>> allPosts;
     public MutableLiveData<Boolean> existedReaction;
     public MutableLiveData<UserResponse> userResponseMutableLiveData;
     public MutableLiveData<String> errorLiveData;
+    public MutableLiveData<String> deletePostLiveData;
     public Integer pages = 0;
     public Long userId;
     private final int size = 30;
@@ -35,9 +39,11 @@ public class ProfileViewModel extends Application {
     public ProfileViewModel(@NonNull Application application) {
         this.profileRepository = new ProfileRepositoryImpl();
         this.reactionRepository = new ReactionRepositoryImpl();
+        this.postRepository = new PostRepositoryImpl();
         this.sharedPref = new SharedPref(application);
         existedReaction = new MutableLiveData<>();
         allPosts = new MutableLiveData<>();
+        deletePostLiveData = new MutableLiveData<>();
         userResponseMutableLiveData = new MutableLiveData<>();
         errorLiveData = new MutableLiveData<>();
         userId = sharedPref.getLongData("userId");
@@ -65,6 +71,21 @@ public class ProfileViewModel extends Application {
             }
         });
     }
+
+    public void deletePost(Long postId) {
+        postRepository.deletePost(postId, new PostRepository.PostResultListener<ResponseObject<String>>() {
+            @Override
+            public void onSuccess(ResponseObject<String> response) {
+                deletePostLiveData.postValue(response.getData());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
 
     public void addReaction(Long user_id, Long post_id) {
         reactionRepository.addReaction(user_id, post_id, new ReactionRepository.ReactionResultListener<ResponseObject<Reaction>>() {

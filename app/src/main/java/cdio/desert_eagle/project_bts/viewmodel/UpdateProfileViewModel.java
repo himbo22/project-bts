@@ -22,8 +22,8 @@ public class UpdateProfileViewModel extends AndroidViewModel {
     private final ProfileRepository profileRepository;
     private final Application application;
     private final SharedPref sharedPref;
-    public MutableLiveData<User> userMutableLiveData;
     public MutableLiveData<String> errorLiveData;
+    public MutableLiveData<User> userMutableLiveData;
 
     public UpdateProfileViewModel(@NonNull Application application) {
         super(application);
@@ -53,7 +53,7 @@ public class UpdateProfileViewModel extends AndroidViewModel {
                 if (!response.getStatus().equals("200")) {
                     errorLiveData.postValue(response.getMessage());
                 } else {
-                    userMutableLiveData.postValue(response.getData());
+                    userMutableLiveData.setValue(response.getData());
                 }
             }
 

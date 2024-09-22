@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.Arrays;
 
-import cdio.desert_eagle.project_bts.EditProfileActivity;
 import cdio.desert_eagle.project_bts.databinding.FragmentPostBinding;
 import cdio.desert_eagle.project_bts.listener.ViewPagerNavigator;
 import cdio.desert_eagle.project_bts.viewmodel.PostViewModel;
@@ -40,7 +39,7 @@ public class PostFragment extends Fragment {
     private Uri image;
     ViewPagerNavigator viewPagerNavigator;
 
-    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -54,7 +53,7 @@ public class PostFragment extends Fragment {
             }
     );
 
-    private ActivityResultLauncher<String> requestPermission = registerForActivityResult(
+    private final ActivityResultLauncher<String> requestPermission = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             new ActivityResultCallback<Boolean>() {
                 @Override
@@ -91,6 +90,7 @@ public class PostFragment extends Fragment {
             if (binding.etCaption.getText().toString().isBlank() || binding.imgContent.getDrawable() == null) {
                 Toast.makeText(requireActivity(), "Please add a caption and image to share your status.", Toast.LENGTH_SHORT).show();
             } else {
+                binding.pbLoading.setVisibility(View.VISIBLE);
                 postViewModel.createPost(binding.etCaption.getText().toString(), image);
             }
         });
@@ -100,6 +100,7 @@ public class PostFragment extends Fragment {
         // observer
         postViewModel.successfulShareStatusLiveData.observe(requireActivity(), message -> {
             Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+            binding.pbLoading.setVisibility(View.GONE);
             binding.etCaption.setText("");
             binding.imgContent.setImageDrawable(null);
             binding.imgContent.setVisibility(View.GONE);
@@ -107,6 +108,7 @@ public class PostFragment extends Fragment {
         });
 
         postViewModel.errorLiveData.observe(requireActivity(), message -> {
+            binding.pbLoading.setVisibility(View.GONE);
             Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
         });
 

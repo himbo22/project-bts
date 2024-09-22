@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -19,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import cdio.desert_eagle.project_bts.MessageActivity;
 import cdio.desert_eagle.project_bts.adapter.UserMessagedAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentMessageBinding;
-import cdio.desert_eagle.project_bts.model.request.UserMessage;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
+import cdio.desert_eagle.project_bts.model.request.UserMessage;
 import cdio.desert_eagle.project_bts.viewmodel.UserListViewModel;
 
 public class MessageFragment extends Fragment {
@@ -29,13 +27,9 @@ public class MessageFragment extends Fragment {
     UserListViewModel userListViewModel;
     UserMessagedAdapter userMessagedAdapter;
 
-    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult o) {
-
-                }
+            o -> {
             }
     );
 

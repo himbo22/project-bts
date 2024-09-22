@@ -67,6 +67,8 @@ public interface ApiService {
             @Part MultipartBody.Part content
     );
 
+    @DELETE("/api/posts/delete/{id}")
+    Call<ResponseObject<String>> deletePost(@Path("id") Long postId);
 
     // reaction
     @GET("/api/reactions/user/{user_id}/post/{post_id}")

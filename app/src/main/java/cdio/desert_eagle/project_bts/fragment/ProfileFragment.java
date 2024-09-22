@@ -1,8 +1,8 @@
 package cdio.desert_eagle.project_bts.fragment;
 
+import static android.app.Activity.RESULT_OK;
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,9 +30,10 @@ import cdio.desert_eagle.project_bts.EditProfileActivity;
 import cdio.desert_eagle.project_bts.LoginActivity;
 import cdio.desert_eagle.project_bts.MainActivity;
 import cdio.desert_eagle.project_bts.R;
-import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentProfileBinding;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
+import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 
 
@@ -45,7 +46,7 @@ public class ProfileFragment extends Fragment {
     private final ActivityResultLauncher<Intent> editProfileResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
+                if (result.getResultCode() == RESULT_OK) {
                     doEverything();
                 }
             }
@@ -85,9 +86,23 @@ public class ProfileFragment extends Fragment {
                     editProfileResultLauncher.launch(intent);
                     return true;
                 } else if (menuItem.getItemId() == R.id.logOut) {
-                    profileViewModel.logOut();
-                    startActivity(new Intent(requireActivity(), LoginActivity.class));
-                    requireActivity().finishAffinity();
+                    new UpdateProfileDialog("Are you sure to log out?",
+                            "",
+                            "YES", new BaseResult<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean response) {
+                            if (response) {
+                                profileViewModel.logOut();
+                                startActivity(new Intent(requireActivity(), LoginActivity.class));
+                                requireActivity().finishAffinity();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
                     return true;
                 }
 
@@ -95,11 +110,28 @@ public class ProfileFragment extends Fragment {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-        profileAdapter = new ProfileAdapter(requireActivity(), profileViewModel, new OnProfileItemListener() {
+        profileAdapter = new ProfileAdapter(1, profileViewModel, new OnProfileItemListener() {
             @Override
             public void option(Long postId) {
-                ReportDialog reportDialog = new ReportDialog(profileViewModel.userId, postId);
-                reportDialog.show(getParentFragmentManager(), reportDialog.getTag());
+                UpdateProfileDialog updateProfileDialog = new UpdateProfileDialog(
+                        "Are you sure delete this post?",
+                        "",
+                        "Yes",
+                        new BaseResult<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean response) {
+                                if (response) {
+                                    profileViewModel.deletePost(postId);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+
+                            }
+                        }
+                );
+                updateProfileDialog.show(getParentFragmentManager(), "delete_post");
             }
 
             @Override
@@ -115,7 +147,11 @@ public class ProfileFragment extends Fragment {
 
         // observer
         profileViewModel.allPosts.observe(requireActivity(), userPostsLiveData -> {
-            profileAdapter.updateData(userPostsLiveData);
+            profileAdapter.resetData(userPostsLiveData);
+        });
+
+        profileViewModel.deletePostLiveData.observe(requireActivity(), message -> {
+            doEverything();
         });
 
         profileViewModel.userResponseMutableLiveData.observe(requireActivity(), data -> {
@@ -134,12 +170,9 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        binding.nsProfile.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    profileViewModel.loadMoreUserPosts();
-                }
+        binding.nsProfile.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                profileViewModel.loadMoreUserPosts();
             }
         });
 

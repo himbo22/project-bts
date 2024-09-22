@@ -3,7 +3,6 @@ package cdio.desert_eagle.project_bts.adapter;
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -21,23 +20,23 @@ import java.util.List;
 
 import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.databinding.ItemRecyclerviewProfileBinding;
+import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
-import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {
 
     public List<UserPosts> userPosts;
-    Context context;
-    ProfileViewModel profileViewModel;
-    OnProfileItemListener listener;
+    private final ProfileViewModel profileViewModel;
+    private final OnProfileItemListener listener;
+    private final int type;
 
-    public ProfileAdapter(Context context, ProfileViewModel profileViewModel, OnProfileItemListener listener) {
+    public ProfileAdapter(int type, ProfileViewModel profileViewModel, OnProfileItemListener listener) {
         this.userPosts = new ArrayList<>();
-        this.context = context;
         this.profileViewModel = profileViewModel;
         this.listener = listener;
+        this.type = type;
     }
 
     @NonNull
@@ -52,6 +51,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         UserPosts userPost = userPosts.get(position);
+
+        if (type == 1) {
+            holder.binding.imgOption.setImageResource(R.drawable.baseline_delete_outline_24);
+        } else {
+            holder.binding.imgOption.setImageResource(R.drawable.baseline_report_24);
+        }
 
         profileViewModel.reactionExisted(userPost.getAuthor(), userPost.getId(), new BaseResult<Boolean>() {
             @Override

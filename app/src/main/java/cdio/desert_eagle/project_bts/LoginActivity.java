@@ -2,8 +2,10 @@ package cdio.desert_eagle.project_bts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText User = findViewById(R.id.editTextText);
         EditText Pass = findViewById(R.id.editTextTextPassword);
         Button login = findViewById(R.id.button);
+        ProgressBar pbLoading = findViewById(R.id.pbLoading);
         TextView forgot = findViewById(R.id.forgotPasswordTextView);
         TextView sign = findViewById(R.id.sign_up);
         LoginViewModel loginViewModel = new LoginViewModel(this.getApplication());
@@ -30,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             if (username.isBlank() && password.isBlank()) {
                 return;
             }
+            pbLoading.setVisibility(View.VISIBLE);
             loginViewModel.login(username, password);
         });
 
@@ -43,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.loginLiveData.observe(this, data -> {
             loginViewModel.saveUserInformation(data.getId(), data.getAvatar(), data.getUsername());
             startActivity(new Intent(this, MainActivity.class));
+            pbLoading.setVisibility(View.GONE);
             finishAffinity();
         });
 

@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.desert_eagle.project_bts.R;
-import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
+import cdio.desert_eagle.project_bts.model.response.User;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+public class UserSearch extends RecyclerView.Adapter<UserSearch.UserViewHolder> {
 
     private List<User> userList;
     private final BaseResult<User> listener;
 
-    public UserAdapter(BaseResult<User> listener) {
+    public UserSearch(BaseResult<User> listener) {
         this.userList = new ArrayList<>();
         this.listener = listener;
     }

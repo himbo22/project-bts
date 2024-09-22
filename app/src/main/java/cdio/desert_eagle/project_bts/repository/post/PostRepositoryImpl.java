@@ -65,4 +65,19 @@ public class PostRepositoryImpl implements PostRepository {
             }
         });
     }
+
+    @Override
+    public void deletePost(Long postId, PostResultListener<ResponseObject<String>> listener) {
+        apiService.deletePost(postId).enqueue(new Callback<ResponseObject<String>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<String>> call, Response<ResponseObject<String>> response) {
+                listener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<String>> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
+    }
 }

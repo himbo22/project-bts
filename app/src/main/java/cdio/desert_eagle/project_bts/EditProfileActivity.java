@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -31,6 +33,18 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri newAvatar = null;
     private UpdateProfileViewModel updateProfileViewModel;
     private ActivityEditProfileBinding binding;
+    private final CountDownTimer countDownTimer = new CountDownTimer(2000L, 100L) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
+
+        @Override
+        public void onFinish() {
+            binding.pbLoading.setVisibility(View.GONE);
+            setResult(RESULT_OK);
+            finish();
+        }
+    };
 
     private final ActivityResultLauncher<String> permissionResultLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
@@ -69,25 +83,29 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         updateProfileViewModel = new UpdateProfileViewModel(this.getApplication());
-
         Intent intent = getIntent();
         Bitmap b = intent.getParcelableExtra("avatar");
         binding.etUsername.setText(intent.getStringExtra("username"));
         binding.etBio.setText(intent.getStringExtra("bio"));
         binding.imgAvatar.setImageBitmap(b);
 
-
         binding.imgAvatar.setOnClickListener(v -> onRequestPermission());
 
         binding.btnConfirm.setOnClickListener(v -> openUpdateDialog());
 
         binding.btnDiscard.setOnClickListener(v -> openDiscardDialog());
+
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 openDiscardDialog();
             }
         });
+
+        updateProfileViewModel.errorLiveData.observe(this, data -> {
+            binding.pbLoading.setVisibility(View.GONE);
+        });
+
     }
 
     private void openUpdateDialog() {
@@ -99,13 +117,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Boolean response) {
                         if (response) {
+                            binding.pbLoading.setVisibility(View.VISIBLE);
                             updateProfileViewModel.updateProfile(
                                     Objects.requireNonNull(binding.etUsername.getText()).toString(),
                                     Objects.requireNonNull(binding.etBio.getText()).toString(),
                                     newAvatar
                             );
-                            setResult(Activity.RESULT_OK);
-                            finish();
+                            countDownTimer.start();
                         }
                     }
 

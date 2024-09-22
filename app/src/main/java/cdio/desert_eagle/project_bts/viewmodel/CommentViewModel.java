@@ -17,13 +17,13 @@ public class CommentViewModel extends ViewModel {
 
     private final CommentRepository commentRepository;
     public MutableLiveData<List<CommentResponse>> commentResponseLiveData;
-    public MutableLiveData<Comment> commentMutableLiveData;
+    public MutableLiveData<Comment> commentAdditionalLiveData;
     public Integer pages = 0;
 
     public CommentViewModel() {
         this.commentRepository = new CommentRepositoryImpl();
         commentResponseLiveData = new MutableLiveData<>();
-        commentMutableLiveData = new MutableLiveData<>();
+        commentAdditionalLiveData = new MutableLiveData<>();
     }
 
     public void getPostComments(Long postId, int page, int size) {
@@ -65,9 +65,9 @@ public class CommentViewModel extends ViewModel {
             @Override
             public void onSuccess(ResponseObject<Comment> response) {
                 if (response.getData() != null) {
-                    commentMutableLiveData.postValue(response.getData());
+                    commentAdditionalLiveData.postValue(response.getData());
                 } else {
-                    commentMutableLiveData.postValue(null);
+                    commentAdditionalLiveData.postValue(null);
                 }
             }
 
