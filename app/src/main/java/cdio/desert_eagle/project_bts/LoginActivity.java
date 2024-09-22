@@ -9,11 +9,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cdio.desert_eagle.project_bts.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         TextView forgot = findViewById(R.id.forgotPasswordTextView);
         TextView sign = findViewById(R.id.sign_up);
         LoginViewModel loginViewModel = new LoginViewModel(this.getApplication());
+
+        forgot.setOnClickListener(v -> {
+            activityResultLauncher.launch(new Intent(this, ResetPasswordActivity.class));
+        });
 
         //  Login
         login.setOnClickListener(v -> {

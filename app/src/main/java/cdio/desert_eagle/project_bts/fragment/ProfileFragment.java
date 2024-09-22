@@ -102,7 +102,8 @@ public class ProfileFragment extends Fragment {
                         public void onFailure(Throwable t) {
 
                         }
-                    });
+                    }).show(getParentFragmentManager(), "log_out");
+
                     return true;
                 }
 
