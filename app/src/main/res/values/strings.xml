@@ -40,4 +40,6 @@
     <string name="otp">OTP</string>
     <string name="verify">Verify</string>
     <string name="send_again_in">Send again in:</string>
+    <string name="new_password">New Password</string>
+    <string name="reset">Reset</string>
 </resources>
