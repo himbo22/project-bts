@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import static cdio.desert_eagle.project_bts.utils.EmailUtil.patternMatches;
 
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.databinding.ActivityResetPasswordBinding;
 import cdio.desert_eagle.project_bts.model.request.ResetPasswordRequest;
 import cdio.desert_eagle.project_bts.viewmodel.ResetPasswordViewModel;

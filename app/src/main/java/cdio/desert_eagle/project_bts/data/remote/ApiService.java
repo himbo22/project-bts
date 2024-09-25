@@ -9,7 +9,7 @@ import cdio.desert_eagle.project_bts.model.request.LoginRequest;
 import cdio.desert_eagle.project_bts.model.request.ResetPasswordRequest;
 import cdio.desert_eagle.project_bts.model.response.Comment;
 import cdio.desert_eagle.project_bts.model.response.CommentResponse;
-import cdio.desert_eagle.project_bts.model.response.ForgotPassword;
+import cdio.desert_eagle.project_bts.model.response.Follower;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Post;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
@@ -72,6 +72,16 @@ public interface ApiService {
 
     @DELETE("/api/posts/delete/{id}")
     Call<ResponseObject<String>> deletePost(@Path("id") Long postId);
+
+    // follow
+    @POST("/api/follows/follow/{userId}/{followId}")
+    Call<ResponseObject<Follower>> followUser(@Path("userId") long userId, @Path("followId") long followId);
+
+    @POST("/api/follows/unfollow/{userId}/{followId}")
+    Call<ResponseObject<String>> unFollowUser(@Path("userId") long userId, @Path("followId") long followId);
+
+    @GET("/api/follows/follow/{userId}/{followId}")
+    Call<ResponseObject<Boolean>> getFollowUser(@Path("userId") long userId, @Path("followId") long followId);
 
     // reaction
     @GET("/api/reactions/user/{user_id}/post/{post_id}")

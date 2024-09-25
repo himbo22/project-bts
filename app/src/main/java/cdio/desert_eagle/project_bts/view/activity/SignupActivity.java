@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;
@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Arrays;
 import java.util.Objects;
 
+import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.databinding.ActivitySignupBinding;
 import cdio.desert_eagle.project_bts.viewmodel.RegisterViewModel;
 

@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.fragment;
+package cdio.desert_eagle.project_bts.view.fragment;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;

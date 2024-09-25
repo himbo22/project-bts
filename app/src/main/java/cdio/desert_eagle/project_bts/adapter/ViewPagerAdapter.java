@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import cdio.desert_eagle.project_bts.fragment.HomeFragment;
-import cdio.desert_eagle.project_bts.fragment.MessageFragment;
-import cdio.desert_eagle.project_bts.fragment.PostFragment;
-import cdio.desert_eagle.project_bts.fragment.ProfileFragment;
-import cdio.desert_eagle.project_bts.fragment.SearchFragment;
+import cdio.desert_eagle.project_bts.view.fragment.HomeFragment;
+import cdio.desert_eagle.project_bts.view.fragment.MessageFragment;
+import cdio.desert_eagle.project_bts.view.fragment.PostFragment;
+import cdio.desert_eagle.project_bts.view.fragment.ProfileFragment;
+import cdio.desert_eagle.project_bts.view.fragment.SearchFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 

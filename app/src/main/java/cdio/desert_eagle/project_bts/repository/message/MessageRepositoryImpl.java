@@ -29,13 +29,19 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public void sendMessage(UserMessage userMessage, Message message, Long userId, MessageResultListener<Void> listener) {
+    public void sendMessage(UserMessage userMessage, Message message, UserMessage receiverMessage,
+                            MessageResultListener<Void> listener) {
         // users/{userId}/{receiverId}
         DatabaseReference dbUserReference = reference.child("users")
-                .child(String.valueOf(userId)).child(String.valueOf(userMessage.getUserId()));
+                .child(String.valueOf(receiverMessage.getUserId())).child(String.valueOf(userMessage.getUserId()));
+        DatabaseReference dbReceiverReference = reference.child("users")
+                .child(String.valueOf(userMessage.getUserId())).child(String.valueOf(receiverMessage.getUserId()));
         DatabaseReference dbMessageReference = reference.child("messages");
         dbUserReference.setValue(userMessage);
-        String messageId = (userId < userMessage.getUserId()) ? userId + ":" + userMessage.getUserId() : userMessage.getUserId() + ":" + userId;
+        dbReceiverReference.setValue(receiverMessage);
+        String messageId = (receiverMessage.getUserId() < userMessage.getUserId()) ?
+                receiverMessage.getUserId() + ":" +
+                        userMessage.getUserId() : userMessage.getUserId() + ":" + receiverMessage.getUserId();
         dbMessageReference.child(messageId)
                 .child(message.getSentAt())
                 .child("message")

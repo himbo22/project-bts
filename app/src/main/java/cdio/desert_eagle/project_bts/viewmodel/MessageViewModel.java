@@ -24,6 +24,7 @@ public class MessageViewModel extends AndroidViewModel {
     public MutableLiveData<String> realTimeMessageLiveData;
     public MutableLiveData<List<Message>> messagesLiveData;
     private final Long userId;
+    private final String username;
     public final String userAvatar;
 
 
@@ -35,6 +36,7 @@ public class MessageViewModel extends AndroidViewModel {
         SharedPref sharedPref = new SharedPref(application);
         userId = sharedPref.getLongData("userId");
         userAvatar = sharedPref.getStringData("avatar");
+        username = sharedPref.getStringData("username");
     }
 
     public void sendMessage(UserMessage userMessage, Message message) {
@@ -42,19 +44,22 @@ public class MessageViewModel extends AndroidViewModel {
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
         String timeStamp = simpleDateFormat.format(now);
+        UserMessage receiverMessage = new UserMessage(userId, username, userAvatar);
         message.setSentAt(timeStamp);
         message.setUserId(userId);
         userMessage.setLastMessage(timeStamp);
-        messageRepository.sendMessage(userMessage, message, userId, new MessageRepository.MessageResultListener<Void>() {
-            @Override
-            public void onSuccess(Void response) {
-                realTimeMessageLiveData.postValue("ok");
-            }
+        receiverMessage.setLastMessage(timeStamp);
+        messageRepository.sendMessage(userMessage, message, receiverMessage,
+                new MessageRepository.MessageResultListener<Void>() {
+                    @Override
+                    public void onSuccess(Void response) {
+                        realTimeMessageLiveData.postValue("ok");
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-            }
-        });
+                    @Override
+                    public void onFailure(Throwable t) {
+                    }
+                });
     }
 
     public void getMessage(Long receiverId) {

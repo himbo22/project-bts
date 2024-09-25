@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.fragment;
+package cdio.desert_eagle.project_bts.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cdio.desert_eagle.project_bts.R;
-import cdio.desert_eagle.project_bts.UserActivity;
+import cdio.desert_eagle.project_bts.view.activity.UserActivity;
 import cdio.desert_eagle.project_bts.adapter.UserSearch;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.model.response.User;

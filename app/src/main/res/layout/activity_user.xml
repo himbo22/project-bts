@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserActivity">
+    tools:context=".view.activity.UserActivity">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsProfile"
@@ -172,8 +172,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/solid_button"
+                android:enabled="false"
                 android:paddingHorizontal="10dp"
-                android:text="@string/following"
                 app:layout_constraintEnd_toStartOf="@id/btnMessage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvPosts" />

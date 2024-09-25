@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.fragment;
+package cdio.desert_eagle.project_bts.view.dialog;
 
 import android.app.Dialog;
 import android.content.res.Resources;

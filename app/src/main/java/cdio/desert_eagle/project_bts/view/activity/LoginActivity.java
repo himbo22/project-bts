@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {

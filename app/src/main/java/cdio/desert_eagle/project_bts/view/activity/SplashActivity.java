@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.viewmodel.SplashScreenViewModel;
 
 @SuppressLint("CustomSplashScreen")
