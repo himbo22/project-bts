@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import cdio.desert_eagle.project_bts.databinding.ActivityEditProfileBinding;
-import cdio.desert_eagle.project_bts.fragment.UpdateProfileDialog;
+import cdio.desert_eagle.project_bts.view.dialog.UpdateProfileDialog;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.viewmodel.UpdateProfileViewModel;
 

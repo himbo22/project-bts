@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.fragment;
+package cdio.desert_eagle.project_bts.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import cdio.desert_eagle.project_bts.MessageActivity;
+import cdio.desert_eagle.project_bts.view.activity.MessageActivity;
 import cdio.desert_eagle.project_bts.adapter.UserMessagedAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentMessageBinding;
 import cdio.desert_eagle.project_bts.listener.BaseResult;

@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts.fragment;
+package cdio.desert_eagle.project_bts.view.fragment;
 
 import static android.app.Activity.RESULT_OK;
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
@@ -26,14 +26,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 
-import cdio.desert_eagle.project_bts.EditProfileActivity;
-import cdio.desert_eagle.project_bts.LoginActivity;
-import cdio.desert_eagle.project_bts.MainActivity;
+import cdio.desert_eagle.project_bts.view.activity.EditProfileActivity;
+import cdio.desert_eagle.project_bts.view.activity.LoginActivity;
+import cdio.desert_eagle.project_bts.view.activity.MainActivity;
 import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentProfileBinding;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
+import cdio.desert_eagle.project_bts.view.dialog.CommentBottomSheetFragment;
+import cdio.desert_eagle.project_bts.view.dialog.UpdateProfileDialog;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 
 

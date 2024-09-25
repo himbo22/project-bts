@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
@@ -73,7 +73,7 @@ public class MessageActivity extends AppCompatActivity {
                     return;
                 }
                 messageViewModel.sendMessage(
-                        new UserMessage(intent.getStringExtra("username"), receiverId, receiverAvatar),
+                        new UserMessage(receiverId, intent.getStringExtra("username"), receiverAvatar),
                         new Message(binding.etMessage.getText().toString())
                 );
                 binding.etMessage.setText("");

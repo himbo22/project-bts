@@ -15,7 +15,7 @@
     <string name="hoang_cac_lon">hoang cac lon</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="forget_password">Forget password?</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="login">Login</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="log_out">Log out</string>
@@ -40,4 +40,6 @@
     <string name="otp">OTP</string>
     <string name="verify">Verify</string>
     <string name="send_again_in">Send again in:</string>
+    <string name="new_password">New Password</string>
+    <string name="reset">Reset</string>
 </resources>

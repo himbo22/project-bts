@@ -1,4 +1,4 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cdio.desert_eagle.project_bts.R;
 import cdio.desert_eagle.project_bts.adapter.ViewPagerAdapter;
 import cdio.desert_eagle.project_bts.listener.ViewPagerNavigator;
 

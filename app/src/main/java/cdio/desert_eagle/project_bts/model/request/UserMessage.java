@@ -54,7 +54,7 @@ public class UserMessage {
         this.userId = userId;
     }
 
-    public UserMessage(String username, Long userId, String avatar) {
+    public UserMessage(Long userId, String username, String avatar) {
         this.userId = userId;
         this.username = username;
         this.avatar = avatar;

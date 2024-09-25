@@ -6,8 +6,10 @@ import java.util.List;
 
 import cdio.desert_eagle.project_bts.model.request.CommentRequest;
 import cdio.desert_eagle.project_bts.model.request.LoginRequest;
+import cdio.desert_eagle.project_bts.model.request.ResetPasswordRequest;
 import cdio.desert_eagle.project_bts.model.response.Comment;
 import cdio.desert_eagle.project_bts.model.response.CommentResponse;
+import cdio.desert_eagle.project_bts.model.response.Follower;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Post;
 import cdio.desert_eagle.project_bts.model.response.Reaction;
@@ -16,6 +18,7 @@ import cdio.desert_eagle.project_bts.model.response.ResponseObject;
 import cdio.desert_eagle.project_bts.model.response.User;
 import cdio.desert_eagle.project_bts.model.response.UserPosts;
 import cdio.desert_eagle.project_bts.model.response.UserResponse;
+import cdio.desert_eagle.project_bts.model.response.VerifyingResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -70,6 +73,16 @@ public interface ApiService {
     @DELETE("/api/posts/delete/{id}")
     Call<ResponseObject<String>> deletePost(@Path("id") Long postId);
 
+    // follow
+    @POST("/api/follows/follow/{userId}/{followId}")
+    Call<ResponseObject<Follower>> followUser(@Path("userId") long userId, @Path("followId") long followId);
+
+    @POST("/api/follows/unfollow/{userId}/{followId}")
+    Call<ResponseObject<String>> unFollowUser(@Path("userId") long userId, @Path("followId") long followId);
+
+    @GET("/api/follows/follow/{userId}/{followId}")
+    Call<ResponseObject<Boolean>> getFollowUser(@Path("userId") long userId, @Path("followId") long followId);
+
     // reaction
     @GET("/api/reactions/user/{user_id}/post/{post_id}")
     Call<Boolean> existedReaction(@Path("user_id") Long userId, @Path("post_id") Long postId);
@@ -112,13 +125,16 @@ public interface ApiService {
 
     @Multipart
     @Headers("multipart:true")
-    @PUT("api/users/update")
+    @PUT("/api/users/update")
     Call<ResponseObject<User>> updateProfile(
             @Part("userId") RequestBody userId,
             @Part("username") RequestBody username,
             @Nullable @Part("bio") RequestBody bio,
             @Nullable @Part MultipartBody.Part image
     );
+
+    @POST("/api/users/reset-password/{email}")
+    Call<ResponseObject<User>> resetPassword(@Path("email") String email, @Body ResetPasswordRequest request);
 
     // report
     @POST("/api/reports/report/{userId}/{postId}")
@@ -127,4 +143,12 @@ public interface ApiService {
             @Path("postId") Long postId,
             @Body String reason
     );
+
+    // verify otp
+
+    @POST("/api/forgot-password/verify/{email}")
+    Call<VerifyingResponse> verifyingEmail(@Path("email") String email);
+
+    @POST("/api/forgot-password/verify/otp/{otp}/{email}")
+    Call<VerifyingResponse> verifyingOtp(@Path("otp") Integer otp, @Path("email") String email);
 }

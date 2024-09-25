@@ -1,9 +1,10 @@
-package cdio.desert_eagle.project_bts;
+package cdio.desert_eagle.project_bts.view.activity;
 
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,9 +20,9 @@ import com.bumptech.glide.Glide;
 
 import cdio.desert_eagle.project_bts.adapter.ProfileAdapter;
 import cdio.desert_eagle.project_bts.databinding.ActivityUserBinding;
-import cdio.desert_eagle.project_bts.fragment.CommentBottomSheetFragment;
-import cdio.desert_eagle.project_bts.fragment.ReportDialog;
 import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
+import cdio.desert_eagle.project_bts.view.dialog.CommentBottomSheetFragment;
+import cdio.desert_eagle.project_bts.view.dialog.ReportDialog;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 import cdio.desert_eagle.project_bts.viewmodel.UserViewModel;
 
@@ -32,6 +33,7 @@ public class UserActivity extends AppCompatActivity {
     private ProfileViewModel profileViewModel;
     private ProfileAdapter profileAdapter;
     private long userId;
+    private boolean isFollowed = false;
 
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -46,7 +48,7 @@ public class UserActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // init data
-        userViewModel = new UserViewModel();
+        userViewModel = new UserViewModel(this.getApplication());
         profileViewModel = new ProfileViewModel(this.getApplication());
         Intent intent = getIntent();
         Intent intentToMessage = new Intent(this, MessageActivity.class);
@@ -67,6 +69,7 @@ public class UserActivity extends AppCompatActivity {
 
         // init view
         binding.btnMessage.setClickable(false);
+        binding.btnFollow.setClickable(false);
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(this));
         binding.rvPosts.setAdapter(profileAdapter);
         binding.rvPosts.setNestedScrollingEnabled(false);
@@ -75,6 +78,7 @@ public class UserActivity extends AppCompatActivity {
         // call api
         userViewModel.getAllUserPosts(userId);
         userViewModel.getUser(userId);
+        userViewModel.getFollowUser(userId);
 
         binding.btnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +91,19 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        binding.btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFollowed) {
+                    userViewModel.unFollowUser(userId);
+                    isFollowed = false;
+                } else {
+                    userViewModel.followUser(userId);
+                    isFollowed = true;
+                }
             }
         });
 
@@ -132,10 +149,25 @@ public class UserActivity extends AppCompatActivity {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
-
-        userViewModel.likedPostsStatusLiveData.observe(this, data -> {
-
+        userViewModel.getFollowUserLiveData.observe(this, isFollowed -> {
+            binding.btnFollow.setEnabled(true);
+            Log.d("hoangdeptrai", "onCreate: " + isFollowed);
+            this.isFollowed = isFollowed;
+            if (isFollowed) {
+                binding.btnFollow.setText("Following");
+            } else {
+                binding.btnFollow.setText("Follow");
+            }
         });
+
+        userViewModel.followUserLiveData.observe(this, data -> {
+            binding.btnFollow.setText("Following");
+        });
+
+        userViewModel.unFollowUserLoveData.observe(this, message -> {
+            binding.btnFollow.setText("Follow");
+        });
+
     }
 
     private void doEverything() {
