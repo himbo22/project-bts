@@ -42,7 +42,7 @@ public class RegisterViewModel extends AndroidViewModel {
         if (imageRealPath != null) {
             imageFile = new File(imageRealPath);
         } else {
-            errorLiveData.postValue("Something goes wrong");
+            errorLiveData.postValue("invalid image path");
             return;
         }
 

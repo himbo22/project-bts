@@ -33,6 +33,7 @@ public class ProfileViewModel extends Application {
     public MutableLiveData<String> deletePostLiveData;
     public Integer pages = 0;
     public Long userId;
+    public String avatar;
     private final int size = 30;
 
 
@@ -47,6 +48,7 @@ public class ProfileViewModel extends Application {
         userResponseMutableLiveData = new MutableLiveData<>();
         errorLiveData = new MutableLiveData<>();
         userId = sharedPref.getLongData("userId");
+        avatar = sharedPref.getStringData("avatar");
     }
 
 
