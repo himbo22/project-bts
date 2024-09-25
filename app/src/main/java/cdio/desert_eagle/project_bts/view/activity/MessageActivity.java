@@ -49,22 +49,6 @@ public class MessageActivity extends AppCompatActivity {
         Glide.with(this).load(BASE_URL + "/api/images/" + intent.getStringExtra("receiverAvatar"))
                 .into(binding.imgAvatar);
 
-//        binding.btn.setOnClickListener(v -> {
-//            userListViewModel.sendMessage(
-//
-//            );
-//        });
-//
-//        userListViewModel.getMessage();
-//
-//        userListViewModel.realTimeMessageLiveData.observe(requireActivity(), message -> {
-//            binding.tv.setText(message);
-//        });
-
-//        messageViewModel.sendMessage(
-//                new UserMessage(13L, "tintuc_24h", "e3cc0fe8f6584ab684139b384721e9ad.jpg"),
-//                new Message(7L, "", "hoang lon")
-//        );
 
         binding.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +58,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
                 messageViewModel.sendMessage(
                         new UserMessage(receiverId, intent.getStringExtra("username"), receiverAvatar),
-                        new Message(binding.etMessage.getText().toString())
+                        new Message(binding.etMessage.getText().toString().trim())
                 );
                 binding.etMessage.setText("");
             }
