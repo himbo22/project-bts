@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import cdio.desert_eagle.project_bts.databinding.ActivityEditProfileBinding;
-import cdio.desert_eagle.project_bts.view.dialog.UpdateProfileDialog;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
+import cdio.desert_eagle.project_bts.view.dialog.NotifyDialog;
 import cdio.desert_eagle.project_bts.viewmodel.UpdateProfileViewModel;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -109,7 +109,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void openUpdateDialog() {
-        new UpdateProfileDialog(
+        new NotifyDialog(
                 "Confirm Change",
                 "Updating this information will update your entire profile",
                 "Update",
@@ -135,7 +135,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void openDiscardDialog() {
-        new UpdateProfileDialog(
+        new NotifyDialog(
                 "Confirm Discard",
                 "Discard all changes",
                 "Discard",

@@ -20,6 +20,8 @@ import cdio.desert_eagle.project_bts.adapter.StatusAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentHomeBinding;
 import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.listener.ViewPagerNavigator;
+import cdio.desert_eagle.project_bts.view.dialog.CommentBottomSheetFragment;
+import cdio.desert_eagle.project_bts.view.dialog.ReportDialog;
 import cdio.desert_eagle.project_bts.viewmodel.HomeViewModel;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 

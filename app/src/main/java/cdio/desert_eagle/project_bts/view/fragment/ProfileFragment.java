@@ -35,7 +35,7 @@ import cdio.desert_eagle.project_bts.databinding.FragmentProfileBinding;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
 import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.view.dialog.CommentBottomSheetFragment;
-import cdio.desert_eagle.project_bts.view.dialog.UpdateProfileDialog;
+import cdio.desert_eagle.project_bts.view.dialog.NotifyDialog;
 import cdio.desert_eagle.project_bts.viewmodel.ProfileViewModel;
 
 

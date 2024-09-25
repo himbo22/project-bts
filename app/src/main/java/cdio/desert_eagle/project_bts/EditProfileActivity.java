@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import cdio.desert_eagle.project_bts.databinding.ActivityEditProfileBinding;
-import cdio.desert_eagle.project_bts.fragment.NotifyDialog;
 import cdio.desert_eagle.project_bts.listener.BaseResult;
+import cdio.desert_eagle.project_bts.view.dialog.NotifyDialog;
 import cdio.desert_eagle.project_bts.viewmodel.UpdateProfileViewModel;
 
 public class EditProfileActivity extends AppCompatActivity {

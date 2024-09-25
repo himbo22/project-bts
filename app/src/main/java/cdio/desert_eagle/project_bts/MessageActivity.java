@@ -73,7 +73,7 @@ public class MessageActivity extends AppCompatActivity {
                     return;
                 }
                 messageViewModel.sendMessage(
-                        new UserMessage(intent.getStringExtra("username"), receiverId, receiverAvatar),
+                        new UserMessage(receiverId, intent.getStringExtra("username"), receiverAvatar),
                         new Message(binding.etMessage.getText().toString())
                 );
                 binding.etMessage.setText("");

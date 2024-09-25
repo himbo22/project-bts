@@ -1,5 +1,7 @@
 package cdio.desert_eagle.project_bts.repository.post;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,6 +33,7 @@ public class PostRepositoryImpl implements PostRepository {
         apiService.getAllPosts(page, size).enqueue(new Callback<ResponseObject<PageResponse<UserPosts>>>() {
             @Override
             public void onResponse(Call<ResponseObject<PageResponse<UserPosts>>> call, Response<ResponseObject<PageResponse<UserPosts>>> response) {
+                Log.d("hoangdeptrai", "onResponse: " + response.code());
                 listener.onSuccess(response.body());
             }
 
