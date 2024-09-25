@@ -10,17 +10,17 @@ import androidx.fragment.app.DialogFragment;
 
 import cdio.desert_eagle.project_bts.listener.BaseResult;
 
-public class UpdateProfileDialog extends DialogFragment {
+public class NotifyDialog extends DialogFragment {
 
     private final BaseResult<Boolean> listener;
     private final String title;
     private final String message;
     private final String positiveMessage;
 
-    public UpdateProfileDialog(String title,
-                               String message,
-                               String positiveMessage,
-                               BaseResult<Boolean> listener) {
+    public NotifyDialog(String title,
+                        String message,
+                        String positiveMessage,
+                        BaseResult<Boolean> listener) {
         this.listener = listener;
         this.title = title;
         this.message = message;

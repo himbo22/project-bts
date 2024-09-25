@@ -88,7 +88,7 @@ public class ProfileFragment extends Fragment {
                     editProfileResultLauncher.launch(intent);
                     return true;
                 } else if (menuItem.getItemId() == R.id.logOut) {
-                    new UpdateProfileDialog("Are you sure to log out?",
+                    new NotifyDialog("Are you sure to log out?",
                             "",
                             "YES", new BaseResult<Boolean>() {
                         @Override
@@ -116,7 +116,7 @@ public class ProfileFragment extends Fragment {
         profileAdapter = new ProfileAdapter(1, profileViewModel, new OnProfileItemListener() {
             @Override
             public void option(Long postId) {
-                UpdateProfileDialog updateProfileDialog = new UpdateProfileDialog(
+                NotifyDialog notifyDialog = new NotifyDialog(
                         "Are you sure delete this post?",
                         "",
                         "Yes",
@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment {
                             }
                         }
                 );
-                updateProfileDialog.show(getParentFragmentManager(), "delete_post");
+                notifyDialog.show(getParentFragmentManager(), "delete_post");
             }
 
             @Override

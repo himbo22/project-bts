@@ -10,6 +10,7 @@ import cdio.desert_eagle.project_bts.data.remote.RetrofitClient;
 import cdio.desert_eagle.project_bts.model.response.PageResponse;
 import cdio.desert_eagle.project_bts.model.response.Post;
 import cdio.desert_eagle.project_bts.model.response.ResponseObject;
+import cdio.desert_eagle.project_bts.model.response.UserPosts;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -26,15 +27,15 @@ public class PostRepositoryImpl implements PostRepository {
 
 
     @Override
-    public void getALlPosts(int page, int size, PostResultListener<ResponseObject<PageResponse<Post>>> listener) {
-        apiService.getAllPosts(page, size).enqueue(new Callback<ResponseObject<PageResponse<Post>>>() {
+    public void getALlPosts(int page, int size, PostResultListener<ResponseObject<PageResponse<UserPosts>>> listener) {
+        apiService.getAllPosts(page, size).enqueue(new Callback<ResponseObject<PageResponse<UserPosts>>>() {
             @Override
-            public void onResponse(Call<ResponseObject<PageResponse<Post>>> call, Response<ResponseObject<PageResponse<Post>>> response) {
+            public void onResponse(Call<ResponseObject<PageResponse<UserPosts>>> call, Response<ResponseObject<PageResponse<UserPosts>>> response) {
                 listener.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseObject<PageResponse<Post>>> call, Throwable t) {
+            public void onFailure(Call<ResponseObject<PageResponse<UserPosts>>> call, Throwable t) {
                 listener.onFailure(t);
             }
         });

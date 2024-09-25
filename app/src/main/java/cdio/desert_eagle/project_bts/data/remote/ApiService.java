@@ -55,7 +55,7 @@ public interface ApiService {
     Call<ResponseObject<PageResponse<UserPosts>>> getAllUserPosts(@Path("id") Long id, @Query("page") int page, @Query("size") int size);
 
     @GET("/api/posts/all")
-    Call<ResponseObject<PageResponse<Post>>> getAllPosts(
+    Call<ResponseObject<PageResponse<UserPosts>>> getAllPosts(
             @Query("page") int page,
             @Query("size") int size
     );

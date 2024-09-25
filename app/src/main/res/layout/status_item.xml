@@ -3,33 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="10dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/other_user_avatar"
-        android:layout_width="62dp"
-        android:layout_height="64dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
         android:contentDescription="@string/OtherUserAvatar"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:shapeAppearanceOverlay="@style/circleImageView" />
 
     <TextView
         android:id="@+id/other_username"
-        android:layout_width="222dp"
+        android:layout_width="0dp"
         android:layout_height="33dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginHorizontal="10dp"
         android:contentDescription="@string/OtherUserName"
         android:text="@string/username"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/option_btn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/other_user_avatar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/other_user_avatar" />
+
+    <TextView
+        android:id="@+id/tvElapsedTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/other_user_avatar"
+        app:layout_constraintEnd_toStartOf="@id/option_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/other_user_avatar"
+        app:layout_constraintTop_toBottomOf="@id/other_username" />
 
     <ImageView
         android:id="@+id/status_image"
-        android:layout_width="410dp"
-        android:layout_height="473dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:contentDescription="@string/status_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -41,8 +58,10 @@
         android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:contentDescription="@string/status"
         android:text="@string/status"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/other_user_avatar" />
@@ -70,33 +89,35 @@
 
     <TextView
         android:id="@+id/status_like_count"
-        android:layout_width="48dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/status_like_count"
-        android:text="@string/like_count"
+        android:text="@string/_0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/status_like_btn"
         app:layout_constraintEnd_toStartOf="@+id/status_comment_btn"
         app:layout_constraintStart_toEndOf="@+id/status_like_btn"
-        app:layout_constraintTop_toBottomOf="@+id/status_image" />
+        app:layout_constraintTop_toTopOf="@id/status_like_btn" />
 
     <TextView
         android:id="@+id/status_comment_count"
-        android:layout_width="48dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/status_comment_count"
-        android:text="@string/comment_count"
+        android:text="@string/_0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/status_comment_btn"
         app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toEndOf="@+id/status_comment_btn"
-        app:layout_constraintTop_toBottomOf="@+id/status_image" />
+        app:layout_constraintTop_toTopOf="@id/status_comment_btn" />
 
     <ImageButton
         android:id="@+id/option_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/other_username"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/option" />
 
