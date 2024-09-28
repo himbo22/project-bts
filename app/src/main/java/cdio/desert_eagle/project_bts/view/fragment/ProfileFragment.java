@@ -142,6 +142,11 @@ public class ProfileFragment extends Fragment {
                 CommentBottomSheetFragment commentBottomSheetFragment = new CommentBottomSheetFragment(postId, profileViewModel.userId);
                 commentBottomSheetFragment.show(getParentFragmentManager(), commentBottomSheetFragment.getTag());
             }
+
+            @Override
+            public void user(Long userId) {
+
+            }
         });
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvPosts.setAdapter(profileAdapter);

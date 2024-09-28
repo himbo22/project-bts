@@ -113,7 +113,6 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusView
         holder.LikeCount.setText(String.valueOf(currentStatus.getLiked()));
         holder.CommentCount.setText(String.valueOf(currentStatus.getCommented()));
 
-
         Glide.with(holder.OtherUserAvatar.getContext())
                 .load(BASE_URL + "/api/images/" + currentStatus.getAuthorAvatar())
                 .into(holder.OtherUserAvatar);
@@ -130,6 +129,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusView
             listener.option(currentStatus.getId());
         });
 
+        holder.OtherUserAvatar.setOnClickListener(v -> {
+            listener.user(currentStatus.getAuthor());
+        });
     }
 
     @Override

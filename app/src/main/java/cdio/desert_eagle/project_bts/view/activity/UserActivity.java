@@ -65,6 +65,11 @@ public class UserActivity extends AppCompatActivity {
                 CommentBottomSheetFragment commentBottomSheetFragment = new CommentBottomSheetFragment(postId, profileViewModel.userId);
                 commentBottomSheetFragment.show(getSupportFragmentManager(), commentBottomSheetFragment.getTag());
             }
+
+            @Override
+            public void user(Long userId) {
+
+            }
         });
 
         // init view

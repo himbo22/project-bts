@@ -3,11 +3,14 @@ package cdio.desert_eagle.project_bts.view.fragment;
 import static cdio.desert_eagle.project_bts.constant.ConstantList.BASE_URL;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
@@ -20,6 +23,7 @@ import cdio.desert_eagle.project_bts.adapter.StatusAdapter;
 import cdio.desert_eagle.project_bts.databinding.FragmentHomeBinding;
 import cdio.desert_eagle.project_bts.listener.OnProfileItemListener;
 import cdio.desert_eagle.project_bts.listener.ViewPagerNavigator;
+import cdio.desert_eagle.project_bts.view.activity.UserActivity;
 import cdio.desert_eagle.project_bts.view.dialog.CommentBottomSheetFragment;
 import cdio.desert_eagle.project_bts.view.dialog.ReportDialog;
 import cdio.desert_eagle.project_bts.viewmodel.HomeViewModel;
@@ -29,6 +33,11 @@ public class HomeFragment extends Fragment {
 
     ViewPagerNavigator viewPagerNavigator;
 
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            o -> {
+            }
+    );
 
     @Nullable
     @Override
@@ -51,6 +60,14 @@ public class HomeFragment extends Fragment {
                         CommentBottomSheetFragment commentBottomSheetFragment = new CommentBottomSheetFragment(postId, profileViewModel.userId);
                         commentBottomSheetFragment.show(getParentFragmentManager(), commentBottomSheetFragment.getTag());
                     }
+
+                    @Override
+                    public void user(Long userId) {
+                        Intent intent = new Intent(requireActivity(), UserActivity.class);
+                        intent.putExtra("userId", userId);
+                        activityResultLauncher.launch(intent);
+                    }
+
                 });
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
@@ -72,9 +89,7 @@ public class HomeFragment extends Fragment {
 
         // observer
 
-        homeViewModel.allPostsLiveData.observe(requireActivity(), data -> {
-            statusAdapter.updateData(data);
-        });
+        homeViewModel.allPostsLiveData.observe(requireActivity(), statusAdapter::updateData);
 
 
         return binding.getRoot();
